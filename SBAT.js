@@ -78,5 +78,5 @@ function getFileData(uploadedFile){
             progressTextDisplay();
         }     
     });
-        reader.readAsText(uploadedFile);
+    reader.readAsText(uploadedFile);
 }

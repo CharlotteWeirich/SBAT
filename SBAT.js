@@ -1,14 +1,14 @@
-var inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
+let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];
-var textIndex = 0;
-var outputData = '[';
-var fileUploaded = false;
+let textIndex = 0;
+let outputData = '[';
+let fileUploaded = false;
 
-var textDisplay = document.getElementById('textDisplay');
-var positiveButton = document.getElementById('positiveButton');
-var negativeButton = document.getElementById('negativeButton');
-var downloadButton = document.getElementById('downloadButton');
-var fileSelector = document.getElementById('fileSelector');
+let textDisplay = document.getElementById('textDisplay');
+let positiveButton = document.getElementById('positiveButton');
+let negativeButton = document.getElementById('negativeButton');
+let downloadButton = document.getElementById('downloadButton');
+let fileSelector = document.getElementById('fileSelector');
 
 positiveButton.addEventListener('click', positiveButtonClicked);
 negativeButton.addEventListener('click', negativeButtonClicked);
@@ -61,11 +61,22 @@ function getFileData(uploadedFile){
     fileUploaded = true;
     textIndex = 0;
     outputData = '[';
-    console.log(uploadedFile);
-    var reader = new FileReader();
+
+    let reader = new FileReader();
     reader.addEventListener('load', function (e){
-        inputData = e.target.result.split(/\r?\n/);
-        progressTextDisplay();
+        if (uploadedFile.type == 'text/plain'){
+            inputData = e.target.result.split(/\r?\n/);
+            progressTextDisplay();
+        }
+        if (uploadedFile.type == 'application/json'){
+            json = e.target.result;
+            parsedJson = JSON.parse(json);
+            inputData = [];
+            for (let i = 0; i < parsedJson.length; i++){
+                inputData.push(parsedJson[i].text);
+            }
+            progressTextDisplay();
+        }     
     });
-    reader.readAsText(uploadedFile);
+        reader.readAsText(uploadedFile);
 }

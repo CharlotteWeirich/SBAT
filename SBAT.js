@@ -52,11 +52,9 @@ function negativeButtonClicked(){
 }
 
 function downloadButtonClicked(){
-    let textToWrite = outputData;
-    let textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
-    let fileNameToSaveAs = document.getElementById('fileNameToSaveAs').value;
+    let textFileAsBlob = new Blob([outputData], {type:'application/json'});
     let downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs;
+    downloadLink.download = document.getElementById('fileNameToSaveAs').value;;
     downloadLink.innerHTML = "Download File";
     if (window.webkitURL != null)
     {

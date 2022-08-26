@@ -15,6 +15,7 @@ let fileSelector = document.getElementById('fileSelector');
 // Main/Setup
 setupHTMLElements();
 progressTextDisplay();
+downloadButton.disabled = true;
 
 function setupHTMLElements(){
     positiveButton.addEventListener('click', positiveButtonClicked);

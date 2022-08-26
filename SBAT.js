@@ -4,20 +4,26 @@ let textIndex = 0;
 let outputData = '[';
 let fileUploaded = false;
 
+// HTML Elements
 let textDisplay = document.getElementById('textDisplay');
 let positiveButton = document.getElementById('positiveButton');
 let negativeButton = document.getElementById('negativeButton');
 let downloadButton = document.getElementById('downloadButton');
 let fileSelector = document.getElementById('fileSelector');
 
-positiveButton.addEventListener('click', positiveButtonClicked);
-negativeButton.addEventListener('click', negativeButtonClicked);
-downloadButton.addEventListener('click', downloadButtonClicked);
-fileSelector.addEventListener('change', (event) => {
-    getFileData(event.target.files[0]);
-});
 
+// Main
+setupHTMLElements();
 progressTextDisplay();
+
+function setupHTMLElements(){
+    positiveButton.addEventListener('click', positiveButtonClicked());
+    negativeButton.addEventListener('click', negativeButtonClicked());
+    downloadButton.addEventListener('click', downloadButtonClicked());
+    fileSelector.addEventListener('change', (event) => {
+        getFileData(event.target.files[0]);
+    });
+}
 
 function progressTextDisplay(){
     if (textIndex < inputData.length){

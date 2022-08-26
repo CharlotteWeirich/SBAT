@@ -56,6 +56,7 @@ function downloadButtonClicked(){
 }
 
 function getFileData(uploadedFile){
+    downloadButton.disabled = true;
     positiveButton.disabled = false;
     negativeButton.disabled = false;
     fileUploaded = true;

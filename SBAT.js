@@ -60,7 +60,36 @@ function getFileData(uploadedFile){
 // Annotation
 /* 
 */
+function makeLabelButton(label){
+    // create Button Element in HTML
+    let labelButton = document.createElement('button');
+    labelButton.innerHTML = label;
+    labelButton.id = label + 'Button';
+    document.body.appendChild(labelButton);
 
+    // give Button functionality
+    document.getElementById(labelButton.id).addEventListener('click', function (){
+        outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "' + label + '"},\r\n';
+        progressTextDisplay();
+    })
+}
+
+// set the label set to the user entered label set and create the annotation buttons
+function submitButtonClicked(){
+    submitButton.disabled = true;
+    // remove the current label buttons
+    if (labelSet.length > 0){
+        for (let i = 0; i < labelSet.length; i++){
+        btn = document.getElementById(labelSet[i] + 'Button');
+        btn.parentNode.removeChild(btn);
+        }
+    }    
+    // create new ones
+    labelSet = enteredLabelSet.value.split(/\r?\n/);
+    for (let i = 0; i < labelSet.length; i++){
+        makeLabelButton(labelSet[i]);
+    }
+}
 function progressTextDisplay(){
     if (textIndex < inputData.length){
         textDisplay.textContent = inputData[textIndex];
@@ -106,35 +135,4 @@ function downloadButtonClicked(){
         document.body.appendChild(downloadLink);
     }
     downloadLink.click();
-}
-
-function makeLabelButton(label){
-    // create Button Element in HTML
-    let labelButton = document.createElement('button');
-    labelButton.innerHTML = label;
-    labelButton.id = label + 'Button';
-    document.body.appendChild(labelButton);
-
-    // give Button functionality
-    document.getElementById(labelButton.id).addEventListener('click', function (){
-        outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "' + label + '"},\r\n';
-        progressTextDisplay();
-    })
-}
-
-// set the label set to the user entered label set and create the annotation buttons
-function submitButtonClicked(){
-    submitButton.disabled = true;
-    // remove the current label buttons
-    if (labelSet.length > 0){
-        for (let i = 0; i < labelSet.length; i++){
-        btn = document.getElementById(labelSet[i] + 'Button');
-        btn.parentNode.removeChild(btn);
-        }
-    }    
-    // create new ones
-    labelSet = enteredLabelSet.value.split(/\r?\n/);
-    for (let i = 0; i < labelSet.length; i++){
-        makeLabelButton(labelSet[i]);
-    }
 }

@@ -3,28 +3,28 @@ let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
 let textIndex = 0;
 let outputData = '[';
 let fileUploaded = false;
-let labelSet = ['Positive', 'Negative'];
+let labelSet = [];
 
 // HTML Elements
 let textDisplay = document.getElementById('textDisplay');
-let positiveButton = document.getElementById('positiveButton');
-let negativeButton = document.getElementById('negativeButton');
 let downloadButton = document.getElementById('downloadButton');
 let fileSelector = document.getElementById('fileSelector');
+let submitButton = document.getElementById('submitButton');
+let enteredLabelSet = document.getElementById('enteredLabelSet');
 
 
 // Main/Setup
 setupHTMLElements();
 progressTextDisplay();
 downloadButton.disabled = true;
+enteredLabelSet.value = 'Positive \r\nNegative';
 
 function setupHTMLElements(){
-    positiveButton.addEventListener('click', positiveButtonClicked);
-    negativeButton.addEventListener('click', negativeButtonClicked);
     downloadButton.addEventListener('click', downloadButtonClicked);
     fileSelector.addEventListener('change', (event) => {
         getFileData(event.target.files[0]);
     });
+    submitButton.addEventListener('click', submitButtonClicked);
 }
 
 // Upload Button
@@ -33,8 +33,7 @@ function setupHTMLElements(){
 // called when change in fileSelector
 function getFileData(uploadedFile){
     downloadButton.disabled = true;
-    positiveButton.disabled = false;
-    negativeButton.disabled = false;
+
     fileUploaded = true;
     textIndex = 0;
     outputData = '[';
@@ -61,15 +60,6 @@ function getFileData(uploadedFile){
 // Annotation
 /* 
 */
-function positiveButtonClicked(){
-    outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "positive"},\r\n';
-    progressTextDisplay();
-}
-
-function negativeButtonClicked(){
-    outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "negative"},\r\n';
-    progressTextDisplay();
-}
 
 function progressTextDisplay(){
     if (textIndex < inputData.length){
@@ -77,13 +67,12 @@ function progressTextDisplay(){
         textIndex ++;
     }
     else{
-        positiveButton.disabled = true;
-        negativeButton.disabled = true;
         alert ('Reached end of data.');
         displayOutput();
         if (fileUploaded){
             downloadButton.disabled = false;
         }
+        submitButton.disabled = false;
     }
 }
 
@@ -120,15 +109,32 @@ function downloadButtonClicked(){
 }
 
 function makeLabelButton(label){
-    // create Button Elment in HTML
+    // create Button Element in HTML
     let labelButton = document.createElement('button');
     labelButton.innerHTML = label;
     labelButton.id = label + 'Button';
     document.body.appendChild(labelButton);
 
     // give Button functionality
-    document.getElementById(label + 'Button').addEventListener('click', function (e){
+    document.getElementById(labelButton.id).addEventListener('click', function (){
         outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "' + label + '"},\r\n';
-        progressTextDisplay;
+        progressTextDisplay();
     })
+}
+
+// set the label set to the user entered label set and create the annotation buttons
+function submitButtonClicked(){
+    submitButton.disabled = true;
+    // remove the current label buttons
+    if (labelSet.length > 0){
+        for (let i = 0; i < labelSet.length; i++){
+        btn = document.getElementById(labelSet[i] + 'Button');
+        btn.parentNode.removeChild(btn);
+        }
+    }    
+    // create new ones
+    labelSet = enteredLabelSet.value.split(/\r?\n/);
+    for (let i = 0; i < labelSet.length; i++){
+        makeLabelButton(labelSet[i]);
+    }
 }

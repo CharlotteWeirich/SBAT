@@ -3,6 +3,7 @@ let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
 let textIndex = 0;
 let outputData = '[';
 let fileUploaded = false;
+let labelSet = ['Positive', 'Negative'];
 
 // HTML Elements
 let textDisplay = document.getElementById('textDisplay');
@@ -116,4 +117,18 @@ function downloadButtonClicked(){
         document.body.appendChild(downloadLink);
     }
     downloadLink.click();
+}
+
+function makeLabelButton(label){
+    // create Button Elment in HTML
+    let labelButton = document.createElement('button');
+    labelButton.innerHTML = label;
+    labelButton.id = label + 'Button';
+    document.body.appendChild(labelButton);
+
+    // give Button functionality
+    document.getElementById(label + 'Button').addEventListener('click', function (e){
+        outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "' + label + '"},\r\n';
+        progressTextDisplay;
+    })
 }

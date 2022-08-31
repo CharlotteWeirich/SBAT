@@ -2,7 +2,6 @@ let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];
 let textIndex = 0;
 let outputData = [];
-let fileUploaded = false;
 let labelSet = [];
 
 // HTML Elements
@@ -33,8 +32,6 @@ function setupHTMLElements(){
 // called when change in fileSelector
 function getFileData(uploadedFile){
     downloadButton.disabled = true;
-
-    fileUploaded = true;
     textIndex = 0;
     outputData = [];
 
@@ -101,9 +98,7 @@ function progressTextDisplay(){
     else{
         alert ('Reached end of data.');
         displayOutput();
-        if (fileUploaded){
-            downloadButton.disabled = false;
-        }
+        downloadButton.disabled = false;
         submitButton.disabled = false;
     }
 }

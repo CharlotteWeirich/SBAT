@@ -1,7 +1,7 @@
 let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];
 let textIndex = 0;
-let outputData = '[';
+let outputData = [];
 let fileUploaded = false;
 let labelSet = [];
 
@@ -36,7 +36,7 @@ function getFileData(uploadedFile){
 
     fileUploaded = true;
     textIndex = 0;
-    outputData = '[';
+    outputData = [];
 
     let reader = new FileReader();
     reader.addEventListener('load', function (e){
@@ -69,7 +69,10 @@ function makeLabelButton(label){
 
     // give Button functionality
     document.getElementById(labelButton.id).addEventListener('click', function (){
-        outputData += '{"text": "' + inputData[textIndex-1] + '", "label": "' + label + '"},\r\n';
+        const aO = new Object();
+        aO.text = inputData[textIndex-1];
+        aO.label = label;
+        outputData.push(aO);
         progressTextDisplay();
     })
 }
@@ -106,16 +109,14 @@ function progressTextDisplay(){
 }
 
 function displayOutput(){
-    outputData = outputData.slice(0, -3);
-    outputData += ']';
-    textDisplay.textContent = outputData;
+    textDisplay.textContent = JSON.stringify(outputData);
 }
 
 // Download Button
 /* write outputData to a .json file and download it
 */
 function downloadButtonClicked(){
-    let textFileAsBlob = new Blob([outputData], {type:'application/json'});
+    let textFileAsBlob = new Blob([JSON.stringify(outputData)], {type:'application/json'});
     let downloadLink = document.createElement("a");
     downloadLink.download = document.getElementById('fileNameToSaveAs').value;;
     downloadLink.innerHTML = "Download File";

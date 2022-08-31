@@ -17,7 +17,7 @@ let enteredLabelSet = document.getElementById('enteredLabelSet');
 setupHTMLElements();
 progressTextDisplay();
 downloadButton.disabled = true;
-enteredLabelSet.value = 'Positive \r\nNegative';
+enteredLabelSet.value = 'Positive\r\nNegative';
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);

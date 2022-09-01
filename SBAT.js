@@ -15,7 +15,6 @@ let enteredLabelSet = document.getElementById('enteredLabelSet');
 // Main/Setup
 setupHTMLElements();
 progressTextDisplay();
-downloadButton.disabled = true;
 enteredLabelSet.value = 'Positive\r\nNegative';
 
 function setupHTMLElements(){
@@ -31,7 +30,6 @@ function setupHTMLElements(){
 */
 // called when change in fileSelector
 function getFileData(uploadedFile){
-    downloadButton.disabled = true;
     textIndex = 0;
     outputData = [];
 
@@ -46,7 +44,13 @@ function getFileData(uploadedFile){
             parsedJson = JSON.parse(json);
             inputData = [];
             for (let i = 0; i < parsedJson.length; i++){
-                inputData.push(parsedJson[i].text);
+                if (parsedJson[i].label != ''){
+                    outputData.push(parsedJson[i]);
+                    progressTextDisplay;
+                }
+                else {
+                    inputData.push(parsedJson[i].text);
+                }
             }
             progressTextDisplay();
         }     
@@ -98,7 +102,6 @@ function progressTextDisplay(){
     else{
         alert ('Reached end of data.');
         displayOutput();
-        downloadButton.disabled = false;
         submitButton.disabled = false;
     }
 }
@@ -111,6 +114,14 @@ function displayOutput(){
 /* write outputData to a .json file and download it
 */
 function downloadButtonClicked(){
+    // add the remaining not yet annotated texts to the output data with empty labels
+    while (textIndex <= inputData.length){
+        const aO = new Object();
+        aO.text = inputData[textIndex-1];
+        aO.label = '';
+        outputData.push(aO);
+        textIndex++;
+    }
     let textFileAsBlob = new Blob([JSON.stringify(outputData)], {type:'application/json'});
     let downloadLink = document.createElement("a");
     downloadLink.download = document.getElementById('fileNameToSaveAs').value;;

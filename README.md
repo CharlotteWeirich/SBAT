@@ -6,8 +6,10 @@ Done:
 - display the annotated data at the end of annotating
 - allow for file upload of .txt and .json files
 - allow for download of .json files of the annotated data
+- allow for different label sets including more than two labels
+- allow download while annotation is not finished
+- save label set to downloaded file
 
 To do:
-- allow for different label sets including more than two labels
 - add an option for keyboard shortcuts and for setting those
 - allow pagination, for showing context, instead of just one text per page

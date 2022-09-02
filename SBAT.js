@@ -44,6 +44,14 @@ function getFileData(uploadedFile){
             parsedJson = JSON.parse(json);
             inputData = [];
             for (let i = 0; i < parsedJson.length; i++){
+                // load saved labelSet from file if there is one
+                if (i == 0 && parsedJson[i].hasOwnProperty('labelSet')){
+                    for (let j = 0; j < parsedJson[i].labelSet; j ++){
+                        enteredLabelSet.value += parsedJson[i].labelSet[j];
+                    }
+                    submitButtonClicked();
+                }
+                // put already annotated texts directly into outputData and skip ahead
                 if (parsedJson[i].label != ''){
                     outputData.push(parsedJson[i]);
                     progressTextDisplay;
@@ -121,6 +129,12 @@ function downloadButtonClicked(){
         aO.label = '';
         outputData.push(aO);
         textIndex++;
+    }
+    // add the label set to the beginning of the outputData
+    if (labelSet.length != 0){
+        labelSetObject = new Object();
+        labelSetObject.labelSet = labelSet;
+        outputData.unshift(labelSetObject);
     }
     let textFileAsBlob = new Blob([JSON.stringify(outputData)], {type:'application/json'});
     let downloadLink = document.createElement("a");

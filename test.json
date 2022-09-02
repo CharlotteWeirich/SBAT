@@ -1,5 +1,5 @@
-[{"text": "Bad movie with good actors.", "label": "negative"},
-{"text": "A fun time.", "label": "positive"},
-{"text": "It's so good but super sad.", "label": "positive"},
-{"text": "Boring", "label": "negative"},
-{"text": "Good movie for children.", "label": "positive"}]
+[{"text": "Bad movie with good actors.", "label": ""},
+{"text": "A fun time.", "label": ""},
+{"text": "It's so good but super sad.", "label": ""},
+{"text": "Boring", "label": ""},
+{"text": "Good movie for children.", "label": ""}]

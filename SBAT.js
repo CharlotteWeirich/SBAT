@@ -3,6 +3,7 @@ let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
 let textIndex = 0;
 let outputData = [];
 let labelSet = [];
+let paginationOn = false;
 
 // HTML Elements
 let textDisplay = document.getElementById('textDisplay');
@@ -10,12 +11,14 @@ let downloadButton = document.getElementById('downloadButton');
 let fileSelector = document.getElementById('fileSelector');
 let submitButton = document.getElementById('submitButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
+let paginationCheckbox = document.getElementById('paginationCheckbox');
 
 
 // Main/Setup
 setupHTMLElements();
 progressTextDisplay();
 enteredLabelSet.value = 'Positive\r\nNegative';
+paginationCheckbox.checked = false;
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
@@ -23,6 +26,7 @@ function setupHTMLElements(){
         getFileData(event.target.files[0]);
     });
     submitButton.addEventListener('click', submitButtonClicked);
+    paginationCheckbox.addEventListener('change', changePaginationOption);
 }
 
 // Upload Button
@@ -103,14 +107,38 @@ function submitButtonClicked(){
     }
 }
 function progressTextDisplay(){
-    if (textIndex < inputData.length){
-        textDisplay.textContent = inputData[textIndex];
-        textIndex ++;
+
+    if (paginationOn){
+        if (textIndex < inputData.length){
+            let textDisplayOutput = '';
+            if(textIndex >= 1){
+                textDisplayOutput += inputData[textIndex-1] + '\r\n';
+            }
+            textDisplayOutput += inputData[textIndex] + '\r\n';
+            if (textIndex < inputData.length-1){
+                textDisplayOutput += inputData[textIndex+1];
+            }
+            console.log(String(textDisplayOutput))
+            textDisplay.textContent = String(textDisplayOutput);
+            textIndex++;
+        }
+        else{
+            alert ('Reached end of data.');
+            displayOutput();
+            submitButton.disabled = false;
+        }
     }
+
     else{
-        alert ('Reached end of data.');
-        displayOutput();
-        submitButton.disabled = false;
+        if (textIndex < inputData.length){
+            textDisplay.textContent = inputData[textIndex];
+            textIndex ++;
+        }
+        else{
+            alert ('Reached end of data.');
+            displayOutput();
+            submitButton.disabled = false;
+        }
     }
 }
 
@@ -156,4 +184,22 @@ function downloadButtonClicked(){
         document.body.appendChild(downloadLink);
     }
     downloadLink.click();
+}
+
+// Pagination
+
+function changePaginationOption(){
+    if (paginationOn == false){
+        paginationOn = true;
+        console.log('on');
+        textIndex--;
+        progressTextDisplay();
+    }
+    else{
+        paginationOn = false;
+        console.log('off');
+        textIndex--;
+        progressTextDisplay();
+    }
+    //progressTextDisplay();
 }

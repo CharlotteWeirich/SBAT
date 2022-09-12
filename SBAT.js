@@ -3,12 +3,14 @@ let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
 let textIndex = 0;
 let outputData = [];
 let labelSet = [];
+let shortcutList = ['p', 'n'];
 
 // HTML Elements
 let textDisplay = document.getElementById('textDisplay');
 let downloadButton = document.getElementById('downloadButton');
 let fileSelector = document.getElementById('fileSelector');
 let submitButton = document.getElementById('submitButton');
+let shortcutButton = document.getElementById('shortcutButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
 
 
@@ -16,6 +18,7 @@ let enteredLabelSet = document.getElementById('enteredLabelSet');
 setupHTMLElements();
 progressTextDisplay();
 enteredLabelSet.value = 'Positive\r\nNegative';
+shortcutButton.disabled = true;
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
@@ -23,6 +26,7 @@ function setupHTMLElements(){
         getFileData(event.target.files[0]);
     });
     submitButton.addEventListener('click', submitButtonClicked);
+    shortcutButton.addEventListener('click', shortcutButtonClicked);
 }
 
 // Upload Button
@@ -69,11 +73,12 @@ function getFileData(uploadedFile){
 // Annotation
 /* 
 */
-function makeLabelButton(label){
+function makeLabelButton(label, shortcut){
     // create Button Element in HTML
     let labelButton = document.createElement('button');
     labelButton.innerHTML = label;
     labelButton.id = label + 'Button';
+    labelButton.accessKey = shortcut;
     document.body.appendChild(labelButton);
 
     // give Button functionality
@@ -89,6 +94,7 @@ function makeLabelButton(label){
 // set the label set to the user entered label set and create the annotation buttons
 function submitButtonClicked(){
     submitButton.disabled = true;
+    shortcutButton.disabled = false;
     // remove the current label buttons
     if (labelSet.length > 0){
         for (let i = 0; i < labelSet.length; i++){
@@ -99,7 +105,7 @@ function submitButtonClicked(){
     // create new ones
     labelSet = enteredLabelSet.value.split(/\r?\n/);
     for (let i = 0; i < labelSet.length; i++){
-        makeLabelButton(labelSet[i]);
+        makeLabelButton(labelSet[i], shortcutList[i]);
     }
 }
 function progressTextDisplay(){
@@ -111,6 +117,12 @@ function progressTextDisplay(){
         alert ('Reached end of data.');
         displayOutput();
         submitButton.disabled = false;
+        if (labelSet.length > 0){
+            for (let i = 0; i < labelSet.length; i++){
+            btn = document.getElementById(labelSet[i] + 'Button');
+            btn.disabled = true;
+            }
+        }   
     }
 }
 
@@ -156,4 +168,18 @@ function downloadButtonClicked(){
         document.body.appendChild(downloadLink);
     }
     downloadLink.click();
+}
+
+// shortcut Choice
+
+function shortcutButtonClicked(){
+    shortcutWindow = window.open('shortcutChoice.html', 'shortcutChoice',
+    'scrollbars=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=300,left=100,top=100');
+    message_broadcast(labelSet);
+}
+
+function message_broadcast(message)
+{
+    localStorage.setItem('message',JSON.stringify(message));
+    localStorage.removeItem('message');
 }

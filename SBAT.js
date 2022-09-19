@@ -110,15 +110,13 @@ function progressTextDisplay(){
 
     if (paginationOn){
         if (textIndex < inputData.length){
-            let textDisplayOutput = '';
             if(textIndex >= 1){
-                textDisplayOutput += inputData[textIndex-1] + '\r\n';
+                textFrontDisplay.value = inputData[textIndex-1];
             }
-            textDisplayOutput += inputData[textIndex] + '\r\n';
+            textDisplay.value = inputData[textIndex];
             if (textIndex < inputData.length-1){
-                textDisplayOutput += inputData[textIndex+1];
+                textBackDisplay.value = inputData[textIndex+1];
             }
-            textDisplay.value = String(textDisplayOutput);
             textIndex++;
         }
         else{
@@ -194,10 +192,21 @@ function changePaginationOption(){
         textFrontDisplay.style = 'width:200px; height:200px';
         textFrontDisplay.readonly = true;
         textFrontDisplay.id = 'textFrontDisplay';
-        //document.getElementById('textDisplayFront').appendChild(textFrontDisplay);
+        document.body.insertBefore(textFrontDisplay, textDisplay);
+        textDisplay.style = 'width:200px; height:200px';
+        textDisplay.style.fontWeight = 'bold';
+        textBackDisplay = document.createElement('textarea');
+        textBackDisplay.style = 'width:200px; height:200px';
+        textBackDisplay.readonly = true;
+        textBackDisplay.id = 'textBackDisplay';
+        document.body.insertBefore(textBackDisplay, paginationCheckbox);
     }
     else{
         paginationOn = false;
+        textFrontDisplay.parentNode.removeChild(textFrontDisplay);
+        textBackDisplay.parentNode.removeChild(textBackDisplay);
+        textDisplay.style = 'width:600px; height:200px';
+        textDisplay.style.fontWeight = 'normal';
     }
     textIndex--;
     progressTextDisplay();

@@ -104,7 +104,7 @@ function submitButtonClicked(){
 }
 function progressTextDisplay(){
     if (textIndex < inputData.length){
-        textDisplay.textContent = inputData[textIndex];
+        textDisplay.value = inputData[textIndex];
         textIndex ++;
     }
     else{
@@ -115,7 +115,7 @@ function progressTextDisplay(){
 }
 
 function displayOutput(){
-    textDisplay.textContent = JSON.stringify(outputData);
+    textDisplay.value = JSON.stringify(outputData);
 }
 
 // Download Button

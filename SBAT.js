@@ -4,6 +4,7 @@ let textIndex = 0;
 let outputData = [];
 let labelSet = [];
 let shortcutList = ['p', 'n'];
+let shortcutWindow;
 
 // HTML Elements
 let textDisplay = document.getElementById('textDisplay');
@@ -175,11 +176,8 @@ function downloadButtonClicked(){
 function shortcutButtonClicked(){
     shortcutWindow = window.open('shortcutChoice.html', 'shortcutChoice',
     'scrollbars=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=300,left=100,top=100');
-    message_broadcast(labelSet);
 }
 
-function message_broadcast(message)
-{
-    localStorage.setItem('message',JSON.stringify(message));
-    localStorage.removeItem('message');
+function notifyOpen(){
+    shortcutWindow.test('hallo');
 }

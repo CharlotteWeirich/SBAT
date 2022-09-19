@@ -118,7 +118,6 @@ function progressTextDisplay(){
             if (textIndex < inputData.length-1){
                 textDisplayOutput += inputData[textIndex+1];
             }
-            console.log(String(textDisplayOutput))
             textDisplay.textContent = String(textDisplayOutput);
             textIndex++;
         }
@@ -191,15 +190,15 @@ function downloadButtonClicked(){
 function changePaginationOption(){
     if (paginationOn == false){
         paginationOn = true;
-        console.log('on');
-        textIndex--;
-        progressTextDisplay();
+        textFrontDisplay = document.createElement('textarea');
+        textFrontDisplay.style = 'width:200px; height:200px';
+        textFrontDisplay.readonly = true;
+        textFrontDisplay.id = 'textFrontDisplay';
+        //document.getElementById('textDisplayFront').appendChild(textFrontDisplay);
     }
     else{
         paginationOn = false;
-        console.log('off');
-        textIndex--;
-        progressTextDisplay();
     }
-    //progressTextDisplay();
+    textIndex--;
+    progressTextDisplay();
 }

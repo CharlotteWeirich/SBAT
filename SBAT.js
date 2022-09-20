@@ -4,7 +4,6 @@ let textIndex = 0;
 let outputData = [];
 let labelSet = [];
 let shortcutList = ['p', 'n'];
-let shortcutWindow;
 
 // HTML Elements
 let textDisplay = document.getElementById('textDisplay');
@@ -13,6 +12,8 @@ let fileSelector = document.getElementById('fileSelector');
 let submitButton = document.getElementById('submitButton');
 let shortcutButton = document.getElementById('shortcutButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
+let shortcutOkayButton = document.getElementById('shortcutOkayButton');
+let shortcutArea = document.getElementById('shortcutArea');
 
 
 // Main/Setup
@@ -28,6 +29,7 @@ function setupHTMLElements(){
     });
     submitButton.addEventListener('click', submitButtonClicked);
     shortcutButton.addEventListener('click', shortcutButtonClicked);
+    shortcutOkayButton.addEventListener('click', shortcutOkayButtonClicked);
 }
 
 // Upload Button
@@ -174,10 +176,32 @@ function downloadButtonClicked(){
 // shortcut Choice
 
 function shortcutButtonClicked(){
-    shortcutWindow = window.open('shortcutChoice.html', 'shortcutChoice',
-    'scrollbars=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=300,left=100,top=100');
+
+    for(i = 0; i < labelSet.length; i++){
+        let shortcutField = document.createElement('textarea');
+        shortcutField.style = 'width:30px; height:15px';
+        shortcutField.maxLength = '1';
+        shortcutField.id = labelSet[i] + 'Shortcut';
+        let shortcutFieldLabel = document.createElement('label');
+        shortcutFieldLabel.for = shortcutField.id;
+        shortcutFieldLabel.innerHTML = labelSet[i];
+        shortcutFieldLabel.id = labelSet[i] + 'Label';
+        shortcutArea.insertBefore(shortcutFieldLabel, shortcutOkayButton);
+        shortcutArea.insertBefore(shortcutField, shortcutFieldLabel);
+    }
+    shortcutOkayButton.hidden = false;
 }
 
-function notifyOpen(){
-    shortcutWindow.test('hallo');
+function shortcutOkayButtonClicked(){
+    alert ('Shortcuts set!');
+    shortcutOkayButton.hidden = true;
+    shortcutList = [];
+    for(i = 0; i < labelSet.length; i++){
+        shortcutList.push(document.getElementById(labelSet[i] + 'Shortcut').value);
+        shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
+        shortcutField.parentNode.removeChild(shortcutField);
+        shortcutFieldLabel = document.getElementById(labelSet[i] + 'Label');
+        shortcutFieldLabel.parentNode.removeChild(shortcutFieldLabel);
+    }
+    console.log(shortcutList);
 }

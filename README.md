@@ -10,6 +10,7 @@ Done:
 - allow download while annotation is not finished
 - save label set to downloaded file
 - allow pagination with one text of context
+- add an option for keyboard shortcuts and for setting those
 
 To do:
 - add an option for keyboard shortcuts and for setting those

@@ -9,7 +9,7 @@ Done:
 - allow for different label sets including more than two labels
 - allow download while annotation is not finished
 - save label set to downloaded file
+- add an option for keyboard shortcuts and for setting those
 
 To do:
-- add an option for keyboard shortcuts and for setting those
 - allow pagination, for showing context, instead of just one text per page

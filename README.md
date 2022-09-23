@@ -13,5 +13,4 @@ Done:
 - add an option for keyboard shortcuts and for setting those
 
 To do:
-- add an option for keyboard shortcuts and for setting those
 - expand pagination option for more texts of context

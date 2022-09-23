@@ -131,8 +131,16 @@ function progressTextDisplay(){
         }
         else{
             alert ('Reached end of data.');
+            changePaginationOption();
+            paginationCheckbox.checked = false;
             displayOutput();
             submitButton.disabled = false;
+            if (labelSet.length > 0){
+                for (let i = 0; i < labelSet.length; i++){
+                btn = document.getElementById(labelSet[i] + 'Button');
+                btn.disabled = true;
+                }
+            }
         }
     }
 
@@ -146,12 +154,12 @@ function progressTextDisplay(){
             displayOutput();
             submitButton.disabled = false;
             if (labelSet.length > 0){
-            for (let i = 0; i < labelSet.length; i++){
-            btn = document.getElementById(labelSet[i] + 'Button');
-            btn.disabled = true;
-            }
-        }   
-    }
+                for (let i = 0; i < labelSet.length; i++){
+                btn = document.getElementById(labelSet[i] + 'Button');
+                btn.disabled = true;
+                }
+            }   
+        }
     }
 }
 

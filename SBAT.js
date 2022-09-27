@@ -3,7 +3,7 @@ let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
 let textIndex = 0;
 let outputData = [];
 let labelSet = [];
-let paginationOn = false;
+let paginationValue = 0;
 let shortcutList;
 let keyCodeList = {"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"d":68,"b":66,"a":65,"s":83,"i":73,"f":70,"k":75,"ß":219,"Dead":220,"+":187,"ü":186,"p":80,"o":79,"u":85,"z":90,"t":84,"r":82,"e":69,"w":87,"g":71,"h":72,"j":74,"l":76,"ö":192,"ä":222,"#":191,"y":89,"x":88,"c":67,"v":86,"n":78,"m":77,",":188,".":190,"-":189,"ArrowRight":39,"ArrowLeft":37,"ArrowUp":38,"ArrowDown":40,"PageDown":34,"Clear":12,"Home":36,"PageUp":33,"End":35,"Delete":46,"Insert":45,"Control":17,"AltGraph":18,"Meta":92,"Alt":18,"Shift":16,"CapsLock":20,"Tab":9,"Escape":27,"F1":112,"F2":113,";":188,":":190,"_":189,"'":191,"*":187,"Q":81,"W":87,"E":69,"R":82,"T":84,"Z":90,"S":83,"A":65,"D":68,"I":73,"U":85,"O":79,"Y":89,"X":88,"C":67,"F":70,"V":86,"G":71,"B":66,"H":72,"N":78,"J":74,"M":77,"K":75,"L":76,"P":80,"Ö":192,"Ä":222,"Ü":186,"!":49,"\"":50,"§":51,"$":52,"%":53,"&":54,"/":55,"(":56,")":57,"=":48,"?":219,"°":220}
 
@@ -14,16 +14,20 @@ let fileSelector = document.getElementById('fileSelector');
 let submitButton = document.getElementById('submitButton');
 let shortcutButton = document.getElementById('shortcutButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
-let paginationCheckbox = document.getElementById('paginationCheckbox');
+let paginationDropdown = document.getElementById('paginationDropdown');
 let shortcutOkayButton = document.getElementById('shortcutOkayButton');
 let shortcutArea = document.getElementById('shortcutArea');
+let pagination0 = document.getElementById('pagination0');
+let pagination1 = document.getElementById('pagination1');
+let pagination2 = document.getElementById('pagination2');
+let pagination3 = document.getElementById('pagination3');
 
 
 // Main/Setup
 setupHTMLElements();
 progressTextDisplay();
 enteredLabelSet.value = 'Positive\r\nNegative';
-paginationCheckbox.checked = false;
+pagination0.selected = true;
 shortcutButton.disabled = true;
 
 function setupHTMLElements(){
@@ -32,7 +36,7 @@ function setupHTMLElements(){
         getFileData(event.target.files[0]);
     });
     submitButton.addEventListener('click', submitButtonClicked);
-    paginationCheckbox.addEventListener('change', changePaginationOption);
+    paginationDropdown.addEventListener('change', changePaginationOption);
     shortcutButton.addEventListener('click', shortcutButtonClicked);
     shortcutOkayButton.addEventListener('click', shortcutOkayButtonClicked);
 }
@@ -118,21 +122,28 @@ function submitButtonClicked(){
 }
 function progressTextDisplay(){
 
-    if (paginationOn){
+    if (paginationValue > 0){
         if (textIndex < inputData.length){
-            if(textIndex >= 1){
-                textFrontDisplay.value = inputData[textIndex-1];
+            for (i = 1; i <= paginationValue; i++){
+                if (textIndex >= i){
+                    textFrontDisplay = document.getElementById('textFrontDisplay' + i);
+                    textFrontDisplay.value = inputData[textIndex - i];
+                }
+                if (textIndex <= inputData.length-i){
+                    textBackDisplay = document.getElementById('textBackDisplay' + i);
+                    textBackDisplay.value = inputData[textIndex + i];
+                    if(textBackDisplay.value == 'undefined'){
+                        textBackDisplay.value = '';
+                    }
+                }
             }
             textDisplay.value = inputData[textIndex];
-            if (textIndex < inputData.length-1){
-                textBackDisplay.value = inputData[textIndex+1];
-            }
             textIndex++;
         }
         else{
             alert ('Reached end of data.');
+            pagination0.selected = true;
             changePaginationOption();
-            paginationCheckbox.checked = false;
             displayOutput();
             submitButton.disabled = false;
             if (labelSet.length > 0){
@@ -210,27 +221,54 @@ function downloadButtonClicked(){
 // Pagination
 
 function changePaginationOption(){
-    if (paginationOn == false){
-        paginationOn = true;
-        textFrontDisplay = document.createElement('textarea');
-        textFrontDisplay.style = 'width:200px; height:200px';
-        textFrontDisplay.readonly = true;
-        textFrontDisplay.id = 'textFrontDisplay';
-        document.body.insertBefore(textFrontDisplay, textDisplay);
-        textDisplay.style = 'width:200px; height:200px';
-        textDisplay.style.fontWeight = 'bold';
-        textBackDisplay = document.createElement('textarea');
-        textBackDisplay.style = 'width:200px; height:200px';
-        textBackDisplay.readonly = true;
-        textBackDisplay.id = 'textBackDisplay';
-        document.body.insertBefore(textBackDisplay, paginationCheckbox);
-    }
-    else{
-        paginationOn = false;
-        textFrontDisplay.parentNode.removeChild(textFrontDisplay);
-        textBackDisplay.parentNode.removeChild(textBackDisplay);
+
+    if (pagination0.selected == true){
+        for(i = 1; i <= paginationValue; i++){
+            textFrontDisplay = document.getElementById('textFrontDisplay' + i);
+            textBackDisplay = document.getElementById('textBackDisplay' + i);
+            textFrontDisplay.parentNode.removeChild(textFrontDisplay);
+            textBackDisplay.parentNode.removeChild(textBackDisplay);
+        }
         textDisplay.style = 'width:600px; height:200px';
         textDisplay.style.fontWeight = 'normal';
+        paginationValue = 0;
+    }
+    else {
+        for(i = 1; i <= paginationValue; i++){
+            textFrontDisplay = document.getElementById('textFrontDisplay' + i);
+            textBackDisplay = document.getElementById('textBackDisplay' + i);
+            textFrontDisplay.parentNode.removeChild(textFrontDisplay);
+            textBackDisplay.parentNode.removeChild(textBackDisplay);
+        }
+        if (pagination1.selected == true){
+            paginationValue = 1;
+        }
+        if (pagination2.selected == true){
+            paginationValue = 2;
+        }
+        if (pagination3.selected == true){
+            paginationValue = 3;
+        }
+        for (i = 1; i <= paginationValue; i++){
+            textFrontDisplay = document.createElement('textarea');
+            textFrontDisplay.style = 'width:200px; height:200px';
+            textFrontDisplay.readonly = true;
+            textFrontDisplay.id = 'textFrontDisplay' + i;
+            if (i == 1){
+                document.body.insertBefore(textFrontDisplay, textDisplay);
+            }
+            else{
+                textFrontDisplayFront = document.getElementById('textFrontDisplay' + (i-1));
+                document.body.insertBefore(textFrontDisplay, textFrontDisplayFront);
+            }
+            textBackDisplay = document.createElement('textarea');
+            textBackDisplay.style = 'width:200px; height:200px';
+            textBackDisplay.readonly = true;
+            textBackDisplay.id = 'textBackDisplay' + i;
+            document.body.insertBefore(textBackDisplay, paginationDropdown);
+        }
+        textDisplay.style = 'width:200px; height:200px';
+        textDisplay.style.fontWeight = 'bold';
     }
     textIndex--;
     progressTextDisplay();

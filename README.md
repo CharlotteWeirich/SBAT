@@ -11,6 +11,8 @@ Done:
 - save label set to downloaded file
 - allow pagination with one text of context
 - add an option for keyboard shortcuts and for setting those
+- expand pagination option for more texts of context
 
 To do:
-- expand pagination option for more texts of context
+- possibly add more features?
+- work on some CSS?

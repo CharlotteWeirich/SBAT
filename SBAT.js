@@ -129,7 +129,7 @@ function progressTextDisplay(){
                     textFrontDisplay = document.getElementById('textFrontDisplay' + i);
                     textFrontDisplay.value = inputData[textIndex - i];
                 }
-                if (textIndex <= inputData.length-i){
+                if (textIndex <= (inputData.length - i)){
                     textBackDisplay = document.getElementById('textBackDisplay' + i);
                     textBackDisplay.value = inputData[textIndex + i];
                     if(textBackDisplay.value == 'undefined'){

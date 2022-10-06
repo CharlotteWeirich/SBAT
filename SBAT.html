@@ -4,27 +4,41 @@
     <meta charset="UTF-8")>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>SBAT</title>
+    <link rel="stylesheet" href="SBAT.css">
 </head>
 <body>
     <h1>SBAT</h1>
-    <textarea style="width:200px; height:300px" id="enteredLabelSet"></textarea>
-    <button id="submitButton">Set Labels</button>
-    <button id="shortcutButton">Set Shortcuts</button>
-    <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
-    <select id="paginationDropdown">
-        <option id="pagination0">0</option>
-        <option id="pagination1">1</option>
-        <option id="pagination2">2</option>
-        <option id="pagination3">3</option>
-    </select>
-    <label for="paginationDropdown">Pagination</label>
-    <input type="file" id="fileSelector" accept=".txt, .json">
-    <textarea style="width:200px; height:25px" id="fileNameToSaveAs">Enter a file name</textarea>
-    <button id="downloadButton" type="button">Download</button>
-    <div id="shortcutArea">
-        <button id="shortcutOkayButton" hidden>Okay</button>
+
+    <div id="labelSetArea">
+        <p>
+            Please enter your label set, one label per line.
+        </p>
+        <textarea style="width:200px; height:200px" id="enteredLabelSet"></textarea>
+        <button id="submitButton">Set Labels</button>
+        <button id="shortcutButton">Set Shortcuts</button>
+        <div id="shortcutArea">
+            <button id="shortcutOkayButton" hidden>Okay</button>
+        </div>
     </div>
 
+    <div id="annotationArea">
+        <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
+        <select id="paginationDropdown">
+            <option id="pagination0">0</option>
+            <option id="pagination1">1</option>
+            <option id="pagination2">2</option>
+            <option id="pagination3">3</option>
+        </select>
+        <label for="paginationDropdown">Pagination</label>
+        <div id="labelButtonArea"></div>
+    </div>
+
+    <div id="upDownloadArea">
+        <input type="file" id="fileSelector" accept=".txt, .json">
+    <textarea style="width:200px; height:20px" id="fileNameToSaveAs">Enter a file name</textarea>
+    <button id="downloadButton" type="button">Download</button>
+    </div>
+    
     <script src="SBAT.js"></script>
 </body>

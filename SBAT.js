@@ -14,6 +14,8 @@ let fileSelector = document.getElementById('fileSelector');
 let submitButton = document.getElementById('submitButton');
 let shortcutButton = document.getElementById('shortcutButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
+let labelButtonArea = document.getElementById('labelButtonArea');
+let anootationArea = document.getElementById('annotationArea');
 let paginationDropdown = document.getElementById('paginationDropdown');
 let shortcutOkayButton = document.getElementById('shortcutOkayButton');
 let shortcutArea = document.getElementById('shortcutArea');
@@ -90,7 +92,8 @@ function makeLabelButton(label){
     let labelButton = document.createElement('button');
     labelButton.innerHTML = label;
     labelButton.id = label + 'Button';
-    document.body.appendChild(labelButton);
+    labelButton.className = 'labelButton';
+    labelButtonArea.appendChild(labelButton);
 
     // give Button functionality
     document.getElementById(labelButton.id).addEventListener('click', function (){
@@ -255,17 +258,17 @@ function changePaginationOption(){
             textFrontDisplay.readonly = true;
             textFrontDisplay.id = 'textFrontDisplay' + i;
             if (i == 1){
-                document.body.insertBefore(textFrontDisplay, textDisplay);
+                annotationArea.insertBefore(textFrontDisplay, textDisplay);
             }
             else{
                 textFrontDisplayFront = document.getElementById('textFrontDisplay' + (i-1));
-                document.body.insertBefore(textFrontDisplay, textFrontDisplayFront);
+                annotationArea.insertBefore(textFrontDisplay, textFrontDisplayFront);
             }
             textBackDisplay = document.createElement('textarea');
             textBackDisplay.style = 'width:200px; height:200px';
             textBackDisplay.readonly = true;
             textBackDisplay.id = 'textBackDisplay' + i;
-            document.body.insertBefore(textBackDisplay, paginationDropdown);
+            annotationArea.insertBefore(textBackDisplay, paginationDropdown);
         }
         textDisplay.style = 'width:200px; height:200px';
         textDisplay.style.fontWeight = 'bold';

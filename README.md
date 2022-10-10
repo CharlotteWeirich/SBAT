@@ -12,6 +12,7 @@ Done:
 - allow pagination with one text of context
 - add an option for keyboard shortcuts and for setting those
 - expand pagination option for more texts of context
+- fix the shortcut function bug that occurs when clicking it multiple times
 
 To do:
 - implement a welcome page and hide the settings when they're not needed
@@ -21,7 +22,6 @@ To do:
 - give a warning when closing the window
 - improve the JSON structure
 - make it so you can set labels at any point
-- fix the shortcut function bug that occurs when clicking it multiple times
 - work on some CSS
 
 Future features:

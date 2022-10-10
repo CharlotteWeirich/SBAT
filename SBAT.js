@@ -290,6 +290,7 @@ function shortcutButtonClicked(){
         shortcutArea.insertBefore(shortcutFieldLabel, shortcutOkayButton);
         shortcutArea.insertBefore(shortcutField, shortcutFieldLabel);
     }
+    shortcutButton.disabled = true;
     shortcutOkayButton.hidden = false;
 }
 
@@ -307,6 +308,7 @@ function shortcutOkayButtonClicked(){
     }
 
     shortcutOkayButton.hidden = true;
+    shortcutButton.disabled = false;
 
     // add shortcut functionality
     document.onkeyup = function(e){

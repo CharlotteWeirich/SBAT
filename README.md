@@ -13,15 +13,16 @@ Done:
 - add an option for keyboard shortcuts and for setting those
 - expand pagination option for more texts of context
 - fix the shortcut function bug that occurs when clicking it multiple times
+- implement a way to navigate the texts without setting labels
+- give a warning before closing the window
+- show total number of texts and place of the current text
 
 To do:
 - implement a welcome page and hide the settings when they're not needed
-- implement a way to navigte the texts without setting labels
 - show the label of the current text
 - make pagination vertical instead of horizontal
-- give a warning when closing the window
 - improve the JSON structure
-- make it so you can set labels at any point
+- make it so you can add labels to the set at any point
 - work on some CSS
 
 Future features:

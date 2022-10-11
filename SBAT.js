@@ -1,7 +1,9 @@
 let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];
 let textIndex = 0;
-let outputData = [];
+let outputData = [{"text":"This movie sucks.","label":""},{"text":"I loved it!","label":""},
+                {"text":"A waste of time.","label":""},{"text":"Truly awful","label":""},
+                {"text":"Most hilarious movie ever","label":""}];
 let labelSet = [];
 let paginationValue = 0;
 let shortcutList;
@@ -21,7 +23,9 @@ let pagination0 = document.getElementById('pagination0');
 let pagination1 = document.getElementById('pagination1');
 let pagination2 = document.getElementById('pagination2');
 let pagination3 = document.getElementById('pagination3');
-
+let textBackwardButton = document.getElementById('textBackwardButton');
+let textForwardButton = document.getElementById('textForwardButton');
+let numberOfTexts = document.getElementById('numberOfTexts');
 
 // Main/Setup
 setupHTMLElements();
@@ -39,6 +43,8 @@ function setupHTMLElements(){
     paginationDropdown.addEventListener('change', changePaginationOption);
     shortcutButton.addEventListener('click', shortcutButtonClicked);
     shortcutOkayButton.addEventListener('click', shortcutOkayButtonClicked);
+    textBackwardButton.addEventListener('click', textBackwardButtonClicked);
+    textForwardButton.addEventListener('click', textForwardButtonClicked);
 }
 
 // Upload Button
@@ -53,6 +59,12 @@ function getFileData(uploadedFile){
     reader.addEventListener('load', function (e){
         if (uploadedFile.type == 'text/plain'){
             inputData = e.target.result.split(/\r?\n/);
+            for (i = 0; i < inputData.length; i++){
+                const aO = new Object();
+                aO.text = inputData[i];
+                aO.label = '';
+                outputData.push(aO);
+            }
             progressTextDisplay();
         }
         if (uploadedFile.type == 'application/json'){
@@ -67,14 +79,8 @@ function getFileData(uploadedFile){
                     }
                     submitButtonClicked();
                 }
-                // put already annotated texts directly into outputData and skip ahead
-                if (parsedJson[i].label != ''){
-                    outputData.push(parsedJson[i]);
-                    progressTextDisplay;
-                }
-                else {
-                    inputData.push(parsedJson[i].text);
-                }
+                inputData.push(parsedJson[i].text);
+                outputData.push(parsedJson);
             }
             progressTextDisplay();
         }     
@@ -94,10 +100,7 @@ function makeLabelButton(label){
 
     // give Button functionality
     document.getElementById(labelButton.id).addEventListener('click', function (){
-        const aO = new Object();
-        aO.text = inputData[textIndex-1];
-        aO.label = label;
-        outputData.push(aO);
+        outputData[textIndex-1].label = label;
         progressTextDisplay();
     })
 }
@@ -172,6 +175,7 @@ function progressTextDisplay(){
             }   
         }
     }
+    numberOfTexts.value = textIndex + '/' + inputData.length;
 }
 
 function displayOutput(){
@@ -182,14 +186,7 @@ function displayOutput(){
 /* write outputData to a .json file and download it
 */
 function downloadButtonClicked(){
-    // add the remaining not yet annotated texts to the output data with empty labels
-    while (textIndex <= inputData.length){
-        const aO = new Object();
-        aO.text = inputData[textIndex-1];
-        aO.label = '';
-        outputData.push(aO);
-        textIndex++;
-    }
+
     // add the label set to the beginning of the outputData
     if (labelSet.length != 0){
         labelSetObject = new Object();
@@ -321,3 +318,31 @@ function shortcutOkayButtonClicked(){
     }
     alert ('Shortcuts set!');
 }
+
+function textBackwardButtonClicked(){
+    if (textIndex-2 >= 0){
+        textIndex-=2;
+        progressTextDisplay();
+    }
+}
+
+function textForwardButtonClicked(){
+    if (textIndex < inputData.length){
+        progressTextDisplay();
+    }
+}
+
+//warning before closing the window
+function goodbye(e) {
+    if(!e) e = window.event;
+    //e.cancelBubble is supported by IE - this will kill the bubbling process.
+    e.cancelBubble = true;
+    e.returnValue = 'You sure you want to leave?'; //This is displayed on the dialog
+
+    //e.stopPropagation works in Firefox.
+    if (e.stopPropagation) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+}
+window.onbeforeunload=goodbye;

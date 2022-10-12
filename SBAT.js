@@ -26,6 +26,7 @@ let pagination3 = document.getElementById('pagination3');
 let textBackwardButton = document.getElementById('textBackwardButton');
 let textForwardButton = document.getElementById('textForwardButton');
 let numberOfTexts = document.getElementById('numberOfTexts');
+let currentTextLabel = document.getElementById('currentTextLabel');
 
 // Main/Setup
 setupHTMLElements();
@@ -71,16 +72,19 @@ function getFileData(uploadedFile){
             json = e.target.result;
             parsedJson = JSON.parse(json);
             inputData = [];
-            for (let i = 0; i < parsedJson.length; i++){
-                // load saved labelSet from file if there is one
-                if (i == 0 && parsedJson[i].hasOwnProperty('labelSet')){
-                    for (let j = 0; j < parsedJson[i].labelSet; j ++){
-                        enteredLabelSet.value += parsedJson[i].labelSet[j];
-                    }
-                    submitButtonClicked();
+            enteredLabelSet.value = '';
+            for (let i = 0; i < parsedJson.labelSet.length; i++){
+                if (i == parsedJson.labelSet.length-1){
+                    enteredLabelSet.value += parsedJson.labelSet[i]
                 }
-                inputData.push(parsedJson[i].text);
-                outputData.push(parsedJson);
+                else{
+                    enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
+                }
+            }
+            submitButtonClicked();
+            for (let i = 0; i < parsedJson.data.length; i++){
+                    inputData.push(parsedJson.data[i].text);
+                    outputData.push(parsedJson.data[i]);
             }
             progressTextDisplay();
         }     
@@ -141,6 +145,7 @@ function progressTextDisplay(){
                 }
             }
             textDisplay.value = inputData[textIndex];
+            currentTextLabel.value = outputData[textIndex].label;
             textIndex++;
         }
         else{
@@ -161,7 +166,8 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             textDisplay.value = inputData[textIndex];
-            textIndex ++;
+            currentTextLabel.value = outputData[textIndex].label;
+            textIndex ++;      
         }
         else{
             alert ('Reached end of data.');
@@ -187,13 +193,10 @@ function displayOutput(){
 */
 function downloadButtonClicked(){
 
-    // add the label set to the beginning of the outputData
-    if (labelSet.length != 0){
-        labelSetObject = new Object();
-        labelSetObject.labelSet = labelSet;
-        outputData.unshift(labelSetObject);
-    }
-    let textFileAsBlob = new Blob([JSON.stringify(outputData)], {type:'application/json'});
+    dataToWrite = new Object();
+    dataToWrite.labelSet = labelSet;
+    dataToWrite.data = outputData;
+    let textFileAsBlob = new Blob([JSON.stringify(dataToWrite)], {type:'application/json'});
     let downloadLink = document.createElement("a");
     downloadLink.download = document.getElementById('fileNameToSaveAs').value;;
     downloadLink.innerHTML = "Download File";

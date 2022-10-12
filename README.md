@@ -16,12 +16,12 @@ Done:
 - implement a way to navigate the texts without setting labels
 - give a warning before closing the window
 - show total number of texts and place of the current text
+- show the label of the current text
+- improve the JSON structure
 
 To do:
 - implement a welcome page and hide the settings when they're not needed
-- show the label of the current text
 - make pagination vertical instead of horizontal
-- improve the JSON structure
 - make it so you can add labels to the set at any point
 - work on some CSS
 

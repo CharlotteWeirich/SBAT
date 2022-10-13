@@ -8,27 +8,32 @@
     <link rel="stylesheet" href="SBAT.css">
 </head>
 <body>
-    <h1>SBAT</h1>
+    <h1>Welcome to SBAT</h1>
+    <h2>A simple browser-based annotation tool</h2>
+    <P>Please upload your file below.</P>
     <input type="file" id="fileSelector" accept=".txt, .json">
-    <textarea style="width:200px; height:300px" id="enteredLabelSet"></textarea>
-    <button id="submitButton">Set Labels</button>
-    <button id="shortcutButton">Set Shortcuts</button>
-    <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
-    <textarea id="numberOfTexts" readonly style="width:50px; height:20px"></textarea>
-    <textarea id="currentTextLabel" readonly style="width:75px; height:20px"></textarea>
-    <button id="textBackwardButton"><<<</button>
-    <button id="textForwardButton">>>></button>
-    <select id="paginationDropdown">
-        <option id="pagination0">0</option>
-        <option id="pagination1">1</option>
-        <option id="pagination2">2</option>
-        <option id="pagination3">3</option>
-    </select>
-    <label for="paginationDropdown">Pagination</label>
-    <textarea style="width:200px; height:25px" id="fileNameToSaveAs">Enter a file name</textarea>
-    <button id="downloadButton" type="button">Download</button>
-    <div id="shortcutArea">
-        <button id="shortcutOkayButton" hidden>Okay</button>
+
+    <div id="annotationArea">
+        <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
+        <textarea id="numberOfTexts" readonly style="width:50px; height:20px"></textarea>
+        <textarea id="currentTextLabel" readonly style="width:75px; height:20px"></textarea>
+
+        <select id="paginationDropdown">
+            <option id="pagination0">0</option>
+            <option id="pagination1">1</option>
+            <option id="pagination2">2</option>
+            <option id="pagination3">3</option>
+        </select>
+        <label for="paginationDropdown">Pagination</label>
+        <div id="orientationButtonArea">
+            <button id="textBackwardButton"><<<</button>
+            <button id="textForwardButton">>>></button>
+        </div>
+        <div id="labelButtonArea"></div>
+        <input type="checkbox" id="settingSwitch">
+        <label for="settingSwitch">Show/Hide settings</label>
+
+    </div>
 
     <div id="labelSetArea">
         <p>
@@ -40,24 +45,8 @@
         <div id="shortcutArea">
             <button id="shortcutOkayButton" hidden>Okay</button>
         </div>
-    </div>
-
-    <div id="annotationArea">
-        <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
-        <select id="paginationDropdown">
-            <option id="pagination0">0</option>
-            <option id="pagination1">1</option>
-            <option id="pagination2">2</option>
-            <option id="pagination3">3</option>
-        </select>
-        <label for="paginationDropdown">Pagination</label>
-        <div id="labelButtonArea"></div>
-    </div>
-
-    <div id="upDownloadArea">
-        <input type="file" id="fileSelector" accept=".txt, .json">
-    <textarea style="width:200px; height:20px" id="fileNameToSaveAs">Enter a file name</textarea>
-    <button id="downloadButton" type="button">Download</button>
+        <textarea style="width:200px; height:20px" id="fileNameToSaveAs">Enter a file name</textarea>
+        <button id="downloadButton" type="button">Download</button>
     </div>
     
     <script src="SBAT.js"></script>

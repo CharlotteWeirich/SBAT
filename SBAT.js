@@ -29,6 +29,8 @@ let textBackwardButton = document.getElementById('textBackwardButton');
 let textForwardButton = document.getElementById('textForwardButton');
 let numberOfTexts = document.getElementById('numberOfTexts');
 let currentTextLabel = document.getElementById('currentTextLabel');
+let labelSetArea = document.getElementById('labelSetArea');
+let settingSwitch = document.getElementById('settingSwitch');
 
 // Main/Setup
 setupHTMLElements();
@@ -36,11 +38,15 @@ progressTextDisplay();
 enteredLabelSet.value = 'Positive\r\nNegative';
 pagination0.selected = true;
 shortcutButton.disabled = true;
+labelSetArea.hidden = true;
+annotationArea.hidden = true;
+settingSwitch.checked = false;
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
     fileSelector.addEventListener('change', (event) => {
         getFileData(event.target.files[0]);
+        annotationArea.hidden = false;
     });
     submitButton.addEventListener('click', submitButtonClicked);
     paginationDropdown.addEventListener('change', changePaginationOption);
@@ -48,6 +54,7 @@ function setupHTMLElements(){
     shortcutOkayButton.addEventListener('click', shortcutOkayButtonClicked);
     textBackwardButton.addEventListener('click', textBackwardButtonClicked);
     textForwardButton.addEventListener('click', textForwardButtonClicked);
+    settingSwitch.addEventListener('change', settingSwitchClicked);
 }
 
 // Upload Button
@@ -75,15 +82,18 @@ function getFileData(uploadedFile){
             parsedJson = JSON.parse(json);
             inputData = [];
             enteredLabelSet.value = '';
-            for (let i = 0; i < parsedJson.labelSet.length; i++){
-                if (i == parsedJson.labelSet.length-1){
-                    enteredLabelSet.value += parsedJson.labelSet[i]
+            if (parsedJson.labelSet.length > 0){
+                for (let i = 0; i < parsedJson.labelSet.length; i++){
+                    if (i == parsedJson.labelSet.length-1){
+                        enteredLabelSet.value += parsedJson.labelSet[i]
+                    }
+                    else{
+                        enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
+                    }
                 }
-                else{
-                    enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
-                }
+                submitButtonClicked();
             }
-            submitButtonClicked();
+
             for (let i = 0; i < parsedJson.data.length; i++){
                     inputData.push(parsedJson.data[i].text);
                     outputData.push(parsedJson.data[i]);
@@ -268,7 +278,7 @@ function changePaginationOption(){
             textBackDisplay.style = 'width:200px; height:200px';
             textBackDisplay.readonly = true;
             textBackDisplay.id = 'textBackDisplay' + i;
-            annotationArea.insertBefore(textBackDisplay, paginationDropdown);
+            annotationArea.insertBefore(textBackDisplay, numberOfTexts);
         }
         textDisplay.style = 'width:200px; height:200px';
         textDisplay.style.fontWeight = 'bold';
@@ -335,6 +345,15 @@ function textBackwardButtonClicked(){
 function textForwardButtonClicked(){
     if (textIndex < inputData.length){
         progressTextDisplay();
+    }
+}
+
+function settingSwitchClicked(){
+    if(settingSwitch.checked == true){
+        labelSetArea. hidden = false;
+    }
+    else{
+        labelSetArea.hidden = true;
     }
 }
 

@@ -279,7 +279,7 @@ function changePaginationOption(){
                 textFrontDiv.appendChild(textFrontDisplay);
             }
             textBackDiv = document.createElement('div');
-            textBackDiv.id = textBackDiv + i;
+            textBackDiv.id = 'textBackDiv' + i;
             textBackDisplay = document.createElement('textarea');
             textBackDisplay.style = 'width:200px; height:200px';
             textBackDisplay.readonly = true;

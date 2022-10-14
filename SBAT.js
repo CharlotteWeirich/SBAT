@@ -237,10 +237,10 @@ function changePaginationOption(){
 
     if (pagination0.selected == true){
         for(i = 1; i <= paginationValue; i++){
-            textFrontDisplay = document.getElementById('textFrontDisplay' + i);
-            textBackDisplay = document.getElementById('textBackDisplay' + i);
-            textFrontDisplay.parentNode.removeChild(textFrontDisplay);
-            textBackDisplay.parentNode.removeChild(textBackDisplay);
+            textFrontDiv = document.getElementById('textFrontDiv' + i);
+            textBackDiv = document.getElementById('textBackDiv' + i);
+            textFrontDiv.parentNode.removeChild(textFrontDiv);
+            textBackDiv.parentNode.removeChild(textBackDiv);
         }
         textDisplay.style = 'width:600px; height:200px';
         textDisplay.style.fontWeight = 'normal';
@@ -248,10 +248,10 @@ function changePaginationOption(){
     }
     else {
         for(i = 1; i <= paginationValue; i++){
-            textFrontDisplay = document.getElementById('textFrontDisplay' + i);
-            textBackDisplay = document.getElementById('textBackDisplay' + i);
-            textFrontDisplay.parentNode.removeChild(textFrontDisplay);
-            textBackDisplay.parentNode.removeChild(textBackDisplay);
+            textFrontDiv = document.getElementById('textFrontDiv' + i);
+            textBackDiv = document.getElementById('textBackDiv' + i);
+            textFrontDiv.parentNode.removeChild(textFrontDiv);
+            textBackDiv.parentNode.removeChild(textBackDiv);
         }
         if (pagination1.selected == true){
             paginationValue = 1;

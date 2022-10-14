@@ -263,22 +263,29 @@ function changePaginationOption(){
             paginationValue = 3;
         }
         for (i = 1; i <= paginationValue; i++){
+            textFrontDiv = document.createElement('div');
+            textFrontDiv.id = 'textFrontDiv' + i;
             textFrontDisplay = document.createElement('textarea');
             textFrontDisplay.style = 'width:200px; height:200px';
             textFrontDisplay.readonly = true;
             textFrontDisplay.id = 'textFrontDisplay' + i;
             if (i == 1){
-                annotationArea.insertBefore(textFrontDisplay, textDisplay);
+                annotationArea.insertBefore(textFrontDiv, textDisplay);
+                textFrontDiv.appendChild(textFrontDisplay);
             }
             else{
-                textFrontDisplayFront = document.getElementById('textFrontDisplay' + (i-1));
-                annotationArea.insertBefore(textFrontDisplay, textFrontDisplayFront);
+                textFrontDivFront = document.getElementById('textFrontDiv' + (i-1));
+                annotationArea.insertBefore(textFrontDiv, textFrontDivFront);
+                textFrontDiv.appendChild(textFrontDisplay);
             }
+            textBackDiv = document.createElement('div');
+            textBackDiv.id = textBackDiv + i;
             textBackDisplay = document.createElement('textarea');
             textBackDisplay.style = 'width:200px; height:200px';
             textBackDisplay.readonly = true;
             textBackDisplay.id = 'textBackDisplay' + i;
-            annotationArea.insertBefore(textBackDisplay, numberOfTexts);
+            annotationArea.insertBefore(textBackDiv, numberOfTexts);
+            textBackDiv.appendChild(textBackDisplay);
         }
         textDisplay.style = 'width:200px; height:200px';
         textDisplay.style.fontWeight = 'bold';
@@ -370,4 +377,4 @@ function goodbye(e) {
         e.preventDefault();
     }
 }
-window.onbeforeunload=goodbye;
+window.onbeforeunload = goodbye;

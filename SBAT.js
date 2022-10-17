@@ -127,7 +127,6 @@ function makeLabelButton(label){
 
 // set the label set to the user entered label set and create the annotation buttons
 function submitButtonClicked(){
-    submitButton.disabled = true;
     shortcutButton.disabled = false;
     
     // remove the current label buttons
@@ -143,6 +142,7 @@ function submitButtonClicked(){
         makeLabelButton(labelSet[i]);
     }
 }
+
 function progressTextDisplay(){
 
     if (paginationValue > 0){
@@ -202,6 +202,19 @@ function progressTextDisplay(){
 
 function displayOutput(){
     textDisplay.value = JSON.stringify(outputData);
+}
+
+function textBackwardButtonClicked(){
+    if (textIndex-2 >= 0){
+        textIndex-=2;
+        progressTextDisplay();
+    }
+}
+
+function textForwardButtonClicked(){
+    if (textIndex < inputData.length){
+        progressTextDisplay();
+    }
 }
 
 // Download Button
@@ -345,19 +358,7 @@ function shortcutOkayButtonClicked(){
     alert ('Shortcuts set!');
 }
 
-function textBackwardButtonClicked(){
-    if (textIndex-2 >= 0){
-        textIndex-=2;
-        progressTextDisplay();
-    }
-}
-
-function textForwardButtonClicked(){
-    if (textIndex < inputData.length){
-        progressTextDisplay();
-    }
-}
-
+//switches
 function settingSwitchClicked(){
     if(settingSwitch.checked == true){
         labelSetArea.hidden = false;

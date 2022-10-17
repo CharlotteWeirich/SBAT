@@ -21,9 +21,9 @@ Done:
 - implement a welcome page and hide the settings when they're not needed
 - make pagination vertical instead of horizontal
 - add an option to show the whole document on one page
+- make it so you can add labels to the set at any point
 
 To do:
-- make it so you can add labels to the set at any point
 - work on some CSS
 
 Future features:

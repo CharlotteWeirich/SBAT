@@ -31,6 +31,7 @@ let numberOfTexts = document.getElementById('numberOfTexts');
 let currentTextLabel = document.getElementById('currentTextLabel');
 let labelSetArea = document.getElementById('labelSetArea');
 let settingSwitch = document.getElementById('settingSwitch');
+let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
 
 // Main/Setup
 setupHTMLElements();
@@ -41,6 +42,7 @@ shortcutButton.disabled = true;
 labelSetArea.hidden = true;
 annotationArea.hidden = true;
 settingSwitch.checked = false;
+wholeDocumentSwitch.checked = false;
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
@@ -55,6 +57,7 @@ function setupHTMLElements(){
     textBackwardButton.addEventListener('click', textBackwardButtonClicked);
     textForwardButton.addEventListener('click', textForwardButtonClicked);
     settingSwitch.addEventListener('change', settingSwitchClicked);
+    wholeDocumentSwitch.addEventListener('change', wholeDocumentSwitchClicked);
 }
 
 // Upload Button
@@ -357,10 +360,42 @@ function textForwardButtonClicked(){
 
 function settingSwitchClicked(){
     if(settingSwitch.checked == true){
-        labelSetArea. hidden = false;
+        labelSetArea.hidden = false;
     }
     else{
         labelSetArea.hidden = true;
+    }
+}
+
+function wholeDocumentSwitchClicked(){
+    if (wholeDocumentSwitch.checked == true){
+        textDisplay.value = '';
+        for (let i = 0; i < inputData.length; i++){
+            textDisplay.value += inputData[i] + '\n'
+        }
+        textBackwardButton.disabled = true;
+        textForwardButton.disabled = true;
+        if (labelSet.length > 0){
+            for (let i = 0; i < labelSet.length; i++){
+            btn = document.getElementById(labelSet[i] + 'Button');
+            btn.disabled = true;
+            }
+        }
+        paginationDropdown.disabled = true;
+    }
+    else{
+        textDisplay.value = '';
+        textIndex--;
+        progressTextDisplay();
+        textBackwardButton.disabled = false;
+        textForwardButton.disabled = false;
+        if (labelSet.length > 0){
+            for (let i = 0; i < labelSet.length; i++){
+            btn = document.getElementById(labelSet[i] + 'Button');
+            btn.disabled = false;
+            }
+        }
+        paginationDropdown.disabled = false;
     }
 }
 

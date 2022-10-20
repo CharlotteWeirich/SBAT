@@ -5,6 +5,7 @@ let outputData = [{"text":"This movie sucks.","label":""},{"text":"I loved it!",
                 {"text":"A waste of time.","label":""},{"text":"Truly awful","label":""},
                 {"text":"Most hilarious movie ever","label":""}];
 let labelSet = [];
+let labelObjectList = [];
 let paginationValue = 0;
 let shortcutList;
 let multilabel = false;
@@ -131,6 +132,8 @@ function makeLabelButton(label){
 function addLabel(label){
     if (multilabel == true){
         outputData[textIndex-1].label.push(label);
+        textIndex--;
+        progressTextDisplay();
     }
     else{
         outputData[textIndex-1].label = [];
@@ -152,12 +155,42 @@ function submitButtonClicked(){
     }    
     // create new ones
     labelSet = enteredLabelSet.value.split(/\r?\n/);
+    labelObjectList = []
     for (let i = 0; i < labelSet.length; i++){
+        labelObject = new Object();
+        labelObject.name = labelSet[i];
+        labelObject.hasParent = false;
+        labelObject.childrenList = [];
+        labelObjectList.push(labelObject);
         makeLabelButton(labelSet[i]);
     }
+
+    for (let i = 0; i < labelSet.length; i++){
+        for (let j = i + 1; j < labelSet.length; j++){
+            if (!labelSet[j].startsWith('>')){
+                break;
+            }
+            else{
+                labelObjectList[i].childrenList.push(labelSet[j]);
+                labelObjectList[j].hasParent = true;
+            }
+        }
+    }
+    textIndex--;
+    progressTextDisplay();
 }
 
 function progressTextDisplay(){
+
+    //hide child buttons
+    if (labelObjectList.length > 0){
+        for (let i = 0; i < labelObjectList.length; i++){
+            if (labelObjectList[i].hasParent){
+                btn = document.getElementById(labelObjectList[i].name + 'Button');
+                btn.hidden = true;
+            }
+        }
+    }
 
     if (paginationValue > 0){
         if (textIndex < inputData.length){
@@ -210,6 +243,24 @@ function progressTextDisplay(){
         }
     }
     numberOfTexts.value = textIndex + '/' + inputData.length;
+
+    // show relevant child buttons
+    if (labelObjectList.length > 0){
+        for(let i = 0; i < outputData[textIndex-1].label.length; i++){
+            let num;
+            for (let j = 0; j < labelObjectList.length; j++){
+                console.log(labelObjectList[j].name);
+                if (labelObjectList[j].name == outputData[textIndex-1].label[i]){
+                    num = j;
+                    break;
+                }
+            }
+            for (let k = 0; k < labelObjectList[num].childrenList.length; k++){
+                btn = document.getElementById(labelObjectList[num].childrenList[k] + 'Button');
+                btn.hidden = false;
+            }
+        }
+    }
 }
 
 function displayOutput(){

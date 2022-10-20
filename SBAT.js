@@ -294,7 +294,7 @@ function changePaginationOption(){
             textFrontDiv = document.createElement('div');
             textFrontDiv.id = 'textFrontDiv' + i;
             textFrontDisplay = document.createElement('textarea');
-            textFrontDisplay.style = 'width:200px; height:200px';
+            textFrontDisplay.style = 'width:600px; height:50px';
             textFrontDisplay.readonly = true;
             textFrontDisplay.id = 'textFrontDisplay' + i;
             if (i == 1){
@@ -309,13 +309,13 @@ function changePaginationOption(){
             textBackDiv = document.createElement('div');
             textBackDiv.id = 'textBackDiv' + i;
             textBackDisplay = document.createElement('textarea');
-            textBackDisplay.style = 'width:200px; height:200px';
+            textBackDisplay.style = 'width:600px; height:50px';
             textBackDisplay.readonly = true;
             textBackDisplay.id = 'textBackDisplay' + i;
             annotationArea.insertBefore(textBackDiv, numberOfTexts);
             textBackDiv.appendChild(textBackDisplay);
         }
-        textDisplay.style = 'width:200px; height:200px';
+        textDisplay.style = 'width:600px; height:50px';
         textDisplay.style.fontWeight = 'bold';
     }
     textIndex--;

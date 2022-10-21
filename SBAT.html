@@ -39,15 +39,19 @@
         <div id="shortcutArea">
             <button id="shortcutOkayButton" hidden>Okay</button>
         </div>
-        <select id="paginationDropdown">
-            <option id="pagination0">0</option>
-            <option id="pagination1">1</option>
-            <option id="pagination2">2</option>
-            <option id="pagination3">3</option>
-        </select>
-        <label for="paginationDropdown">Pagination</label>
-        <input type="checkbox" id="multilabelSwitch">
-        <label for="multilabelSwitch">Allow setting multiple labels per text</label>
+        <div>
+            <select id="paginationDropdown">
+                <option id="pagination0">0</option>
+                <option id="pagination1">1</option>
+                <option id="pagination2">2</option>
+                <option id="pagination3">3</option>
+            </select>
+            <label for="paginationDropdown">Pagination</label>
+        </div>
+        <div>
+            <input type="checkbox" id="multilabelSwitch">
+            <label for="multilabelSwitch">Allow setting multiple labels per text</label>
+        </div>
         <textarea style="width:200px; height:20px" id="fileNameToSaveAs">Enter a file name</textarea>
         <button id="downloadButton" type="button">Download</button>
     </div>

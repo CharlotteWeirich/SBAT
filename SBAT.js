@@ -129,7 +129,16 @@ function makeLabelButton(label){
 
 function addLabel(label){
     if (multilabel == true){
-        outputData[textIndex-1].label.push(label);
+        btn = document.getElementById(label + 'Button');
+        if (btn.classList.contains('selected')){
+            btn.classList.remove('selected');
+            outputData[textIndex-1].label = outputData[textIndex-1].label.filter(function(e) { return e !== label });
+        }
+        else{
+            outputData[textIndex-1].label.push(label);
+        }
+        textIndex--;
+        progressTextDisplay();
     }
     else{
         outputData[textIndex-1].label = [];
@@ -173,16 +182,7 @@ function progressTextDisplay(){
                     }
                 }
             }
-            for (let i = 0; i < labelSet.length; i++){
-                btn = document.getElementById(labelSet[i] + 'Button');
-                if (btn.classList.contains('selected')){
-                    btn.classList.remove('selected');
-                }
-            }
-            for (let i = 0; i < outputData[textIndex].label.length; i++){
-                btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
-                btn.classList.add('selected');
-            }
+            selectLabelButtons();
             textDisplay.value = inputData[textIndex];
             textIndex++;
         }
@@ -203,16 +203,7 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             textDisplay.value = inputData[textIndex];
-            for (let i = 0; i < labelSet.length; i++){
-                btn = document.getElementById(labelSet[i] + 'Button');
-                if (btn.classList.contains('selected')){
-                    btn.classList.remove('selected');
-                }
-            }
-            for (let i = 0; i < outputData[textIndex].label.length; i++){
-                btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
-                btn.classList.add('selected');
-            }
+            selectLabelButtons();
             textIndex ++;      
         }
         else{
@@ -231,6 +222,19 @@ function progressTextDisplay(){
 
 function displayOutput(){
     textDisplay.value = JSON.stringify(outputData);
+}
+
+function selectLabelButtons(){
+    for (let i = 0; i < labelSet.length; i++){
+        btn = document.getElementById(labelSet[i] + 'Button');
+        if (btn.classList.contains('selected')){
+            btn.classList.remove('selected');
+        }
+    }
+    for (let i = 0; i < outputData[textIndex].label.length; i++){
+        btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
+        btn.classList.add('selected');
+    }
 }
 
 function textBackwardButtonClicked(){
@@ -458,6 +462,8 @@ function goodbye(e) {
 }
 window.onbeforeunload = goodbye;
 
+
+// keyboard shortcuts for the navigation buttons
 document.onkeyup = function(e){
     if (e.which == 37 || e.keyCode == 37){
         textBackwardButton.click();

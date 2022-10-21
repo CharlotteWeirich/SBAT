@@ -29,11 +29,12 @@ let pagination3 = document.getElementById('pagination3');
 let textBackwardButton = document.getElementById('textBackwardButton');
 let textForwardButton = document.getElementById('textForwardButton');
 let numberOfTexts = document.getElementById('numberOfTexts');
-let currentTextLabel = document.getElementById('currentTextLabel');
 let labelSetArea = document.getElementById('labelSetArea');
 let settingSwitch = document.getElementById('settingSwitch');
 let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
 let multilabelSwitch = document.getElementById('multilabelSwitch');
+let welcomeArea = document.getElementById('welcomeArea');
+let uploadArea = document.getElementById('uploadArea');
 
 // Main/Setup
 setupHTMLElements();
@@ -52,6 +53,8 @@ function setupHTMLElements(){
     fileSelector.addEventListener('change', (event) => {
         getFileData(event.target.files[0]);
         annotationArea.hidden = false;
+        welcomeArea.hidden = true;
+        uploadArea.hidden = true;
     });
     submitButton.addEventListener('click', submitButtonClicked);
     paginationDropdown.addEventListener('change', changePaginationOption);
@@ -130,7 +133,16 @@ function makeLabelButton(label){
 
 function addLabel(label){
     if (multilabel == true){
-        outputData[textIndex-1].label.push(label);
+        btn = document.getElementById(label + 'Button');
+        if (btn.classList.contains('selected')){
+            btn.classList.remove('selected');
+            outputData[textIndex-1].label = outputData[textIndex-1].label.filter(function(e) { return e !== label });
+        }
+        else{
+            outputData[textIndex-1].label.push(label);
+        }
+        textIndex--;
+        progressTextDisplay();
     }
     else{
         outputData[textIndex-1].label = [];
@@ -174,8 +186,8 @@ function progressTextDisplay(){
                     }
                 }
             }
+            selectLabelButtons();
             textDisplay.value = inputData[textIndex];
-            currentTextLabel.value = outputData[textIndex].label;
             textIndex++;
         }
         else{
@@ -195,7 +207,7 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             textDisplay.value = inputData[textIndex];
-            currentTextLabel.value = outputData[textIndex].label;
+            selectLabelButtons();
             textIndex ++;      
         }
         else{
@@ -214,6 +226,19 @@ function progressTextDisplay(){
 
 function displayOutput(){
     textDisplay.value = JSON.stringify(outputData);
+}
+
+function selectLabelButtons(){
+    for (let i = 0; i < labelSet.length; i++){
+        btn = document.getElementById(labelSet[i] + 'Button');
+        if (btn.classList.contains('selected')){
+            btn.classList.remove('selected');
+        }
+    }
+    for (let i = 0; i < outputData[textIndex].label.length; i++){
+        btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
+        btn.classList.add('selected');
+    }
 }
 
 function textBackwardButtonClicked(){
@@ -294,7 +319,7 @@ function changePaginationOption(){
             textFrontDiv = document.createElement('div');
             textFrontDiv.id = 'textFrontDiv' + i;
             textFrontDisplay = document.createElement('textarea');
-            textFrontDisplay.style = 'width:200px; height:200px';
+            textFrontDisplay.style = 'width:600px; height:50px';
             textFrontDisplay.readonly = true;
             textFrontDisplay.id = 'textFrontDisplay' + i;
             if (i == 1){
@@ -309,13 +334,13 @@ function changePaginationOption(){
             textBackDiv = document.createElement('div');
             textBackDiv.id = 'textBackDiv' + i;
             textBackDisplay = document.createElement('textarea');
-            textBackDisplay.style = 'width:200px; height:200px';
+            textBackDisplay.style = 'width:600px; height:50px';
             textBackDisplay.readonly = true;
             textBackDisplay.id = 'textBackDisplay' + i;
             annotationArea.insertBefore(textBackDiv, numberOfTexts);
             textBackDiv.appendChild(textBackDisplay);
         }
-        textDisplay.style = 'width:200px; height:200px';
+        textDisplay.style = 'width:600px; height:50px';
         textDisplay.style.fontWeight = 'bold';
     }
     textIndex--;
@@ -349,7 +374,6 @@ function shortcutOkayButtonClicked(){
     for(i = 0; i < labelSet.length; i++){
         shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutList[labelSet[i]] = shortcutField.value;
-        shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutField.parentNode.removeChild(shortcutField);
         shortcutFieldLabel = document.getElementById(labelSet[i] + 'Label');
         shortcutFieldLabel.parentNode.removeChild(shortcutFieldLabel);
@@ -360,6 +384,12 @@ function shortcutOkayButtonClicked(){
 
     // add shortcut functionality
     document.onkeyup = function(e){
+        if (e.which == 37 || e.keyCode == 37){
+            textBackwardButton.click();
+        }
+        if (e.which == 39 || e.keyCode == 39){
+            textForwardButton.click();
+        }
         for(i = 0; i < labelSet.length; i++){
             if (e.which == keyCodeList[shortcutList[labelSet[i]]] 
                 || e.keyCode == keyCodeList[shortcutList[labelSet[i]]]){
@@ -374,9 +404,11 @@ function shortcutOkayButtonClicked(){
 function settingSwitchClicked(){
     if(settingSwitch.checked == true){
         labelSetArea.hidden = false;
+        uploadArea.hidden = false;
     }
     else{
         labelSetArea.hidden = true;
+        uploadArea.hidden = true;
     }
 }
 
@@ -435,3 +467,14 @@ function goodbye(e) {
     }
 }
 window.onbeforeunload = goodbye;
+
+
+// keyboard shortcuts for the navigation buttons
+document.onkeyup = function(e){
+    if (e.which == 37 || e.keyCode == 37){
+        textBackwardButton.click();
+    }
+    if (e.which == 39 || e.keyCode == 39){
+        textForwardButton.click();
+    }
+}

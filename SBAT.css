@@ -20,6 +20,11 @@ textarea {
     margin-right: 10px;
 }
 
+.selected {
+    background-color: green;
+    color: lightgrey;
+}
+
 #labelSetArea {
     margin-bottom: 10px;
 }

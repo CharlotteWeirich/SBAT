@@ -29,7 +29,6 @@ let pagination3 = document.getElementById('pagination3');
 let textBackwardButton = document.getElementById('textBackwardButton');
 let textForwardButton = document.getElementById('textForwardButton');
 let numberOfTexts = document.getElementById('numberOfTexts');
-let currentTextLabel = document.getElementById('currentTextLabel');
 let labelSetArea = document.getElementById('labelSetArea');
 let settingSwitch = document.getElementById('settingSwitch');
 let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
@@ -174,8 +173,17 @@ function progressTextDisplay(){
                     }
                 }
             }
+            for (let i = 0; i < labelSet.length; i++){
+                btn = document.getElementById(labelSet[i] + 'Button');
+                if (btn.classList.contains('selected')){
+                    btn.classList.remove('selected');
+                }
+            }
+            for (let i = 0; i < outputData[textIndex].label.length; i++){
+                btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
+                btn.classList.add('selected');
+            }
             textDisplay.value = inputData[textIndex];
-            currentTextLabel.value = outputData[textIndex].label;
             textIndex++;
         }
         else{
@@ -195,7 +203,16 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             textDisplay.value = inputData[textIndex];
-            currentTextLabel.value = outputData[textIndex].label;
+            for (let i = 0; i < labelSet.length; i++){
+                btn = document.getElementById(labelSet[i] + 'Button');
+                if (btn.classList.contains('selected')){
+                    btn.classList.remove('selected');
+                }
+            }
+            for (let i = 0; i < outputData[textIndex].label.length; i++){
+                btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
+                btn.classList.add('selected');
+            }
             textIndex ++;      
         }
         else{

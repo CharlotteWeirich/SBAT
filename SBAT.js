@@ -366,7 +366,6 @@ function shortcutOkayButtonClicked(){
     for(i = 0; i < labelSet.length; i++){
         shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutList[labelSet[i]] = shortcutField.value;
-        shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutField.parentNode.removeChild(shortcutField);
         shortcutFieldLabel = document.getElementById(labelSet[i] + 'Label');
         shortcutFieldLabel.parentNode.removeChild(shortcutFieldLabel);
@@ -377,6 +376,12 @@ function shortcutOkayButtonClicked(){
 
     // add shortcut functionality
     document.onkeyup = function(e){
+        if (e.which == 37 || e.keyCode == 37){
+            textBackwardButton.click();
+        }
+        if (e.which == 39 || e.keyCode == 39){
+            textForwardButton.click();
+        }
         for(i = 0; i < labelSet.length; i++){
             if (e.which == keyCodeList[shortcutList[labelSet[i]]] 
                 || e.keyCode == keyCodeList[shortcutList[labelSet[i]]]){
@@ -452,3 +457,12 @@ function goodbye(e) {
     }
 }
 window.onbeforeunload = goodbye;
+
+document.onkeyup = function(e){
+    if (e.which == 37 || e.keyCode == 37){
+        textBackwardButton.click();
+    }
+    if (e.which == 39 || e.keyCode == 39){
+        textForwardButton.click();
+    }
+}

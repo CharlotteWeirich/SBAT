@@ -33,6 +33,8 @@ let labelSetArea = document.getElementById('labelSetArea');
 let settingSwitch = document.getElementById('settingSwitch');
 let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
 let multilabelSwitch = document.getElementById('multilabelSwitch');
+let welcomeArea = document.getElementById('welcomeArea');
+let uploadArea = document.getElementById('uploadArea');
 
 // Main/Setup
 setupHTMLElements();
@@ -51,6 +53,8 @@ function setupHTMLElements(){
     fileSelector.addEventListener('change', (event) => {
         getFileData(event.target.files[0]);
         annotationArea.hidden = false;
+        welcomeArea.hidden = true;
+        uploadArea.hidden = true;
     });
     submitButton.addEventListener('click', submitButtonClicked);
     paginationDropdown.addEventListener('change', changePaginationOption);
@@ -400,9 +404,11 @@ function shortcutOkayButtonClicked(){
 function settingSwitchClicked(){
     if(settingSwitch.checked == true){
         labelSetArea.hidden = false;
+        uploadArea.hidden = false;
     }
     else{
         labelSetArea.hidden = true;
+        uploadArea.hidden = true;
     }
 }
 

@@ -8,11 +8,19 @@
     <link rel="stylesheet" href="SBAT.css">
 </head>
 <body>
-    <h1>Welcome to SBAT</h1>
-    <h2>A simple browser-based annotation tool</h2>
-    <P>Please upload your file below.</P>
-    <input type="file" id="fileSelector" accept=".txt, .json">
 
+    <h1>SBAT</h1>
+
+    <div id="welcomeArea">
+        <h2>Welcome to SBAT</h2>
+        <h3>A simple browser-based annotation tool</h3>
+        <P>Please upload your file below.</P>
+    </div>
+
+    <div id="uploadArea">
+        <input type="file" id="fileSelector" accept=".txt, .json">
+    </div>
+    
     <div id="annotationArea">
         <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
         <textarea id="numberOfTexts" readonly style="width:50px; height:20px"></textarea>
@@ -26,7 +34,6 @@
         <label for="wholeDocumentSwitch">Show whole document</label>
         <input type="checkbox" id="settingSwitch">
         <label for="settingSwitch">Show settings</label>
-
     </div>
 
     <div id="labelSetArea">

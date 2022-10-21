@@ -118,7 +118,7 @@ function getFileData(uploadedFile){
 function makeLabelButton(label){
     // create Button Element in HTML
     let labelButton = document.createElement('button');
-    labelButton.innerHTML = label;
+    labelButton.innerHTML = label.substring(getSubLabelLevel(label));
     labelButton.id = label + 'Button';
     labelButton.className = 'labelButton';
     labelButtonArea.appendChild(labelButton);
@@ -166,13 +166,14 @@ function submitButtonClicked(){
     }
 
     for (let i = 0; i < labelSet.length; i++){
+        let subLabelLevel = getSubLabelLevel(labelSet[i]);
         for (let j = i + 1; j < labelSet.length; j++){
-            if (!labelSet[j].startsWith('>')){
-                break;
-            }
-            else{
+            if (getSubLabelLevel(labelSet[j]) == subLabelLevel + 1){
                 labelObjectList[i].childrenList.push(labelSet[j]);
                 labelObjectList[j].hasParent = true;
+            }
+            if (getSubLabelLevel(labelSet[j]) <= subLabelLevel){
+                break;
             }
         }
     }
@@ -265,6 +266,19 @@ function progressTextDisplay(){
 
 function displayOutput(){
     textDisplay.value = JSON.stringify(outputData);
+}
+
+function getSubLabelLevel(label){
+    let counter = 0;
+    for (let i = 0; i < label.length; i++){
+        if (label[i] == '>'){
+            counter++;
+        }
+        else{
+            break;
+        }
+    }
+    return counter;
 }
 
 function textBackwardButtonClicked(){

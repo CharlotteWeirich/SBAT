@@ -23,11 +23,11 @@ Done:
 - add an option to show the whole document on one page
 - make it so you can add labels to the set at any point
 - allow for setting multiple labels for one text
+- implement hierarchical label sets
 
 To do:
 - work on some CSS
 
 Future features:
-- implement hierarchical label sets
 - provide views and only step through instances that meet certain criteria
 - add Github integration

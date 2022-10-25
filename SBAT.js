@@ -260,7 +260,6 @@ function progressTextDisplay(){
         for(let i = 0; i < outputData[textIndex-1].label.length; i++){
             let num;
             for (let j = 0; j < labelObjectList.length; j++){
-                console.log(labelObjectList[j].name);
                 if (labelObjectList[j].name == outputData[textIndex-1].label[i]){
                     num = j;
                     break;

@@ -9,6 +9,8 @@ let labelObjectList = [];
 let paginationValue = 0;
 let shortcutList;
 let multilabel = false;
+let filteredDataIndices;
+let filterActive = false;
 let keyCodeList = {"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"d":68,"b":66,"a":65,"s":83,"i":73,"f":70,"k":75,"ß":219,"Dead":220,"+":187,"ü":186,"p":80,"o":79,"u":85,"z":90,"t":84,"r":82,"e":69,"w":87,"g":71,"h":72,"j":74,"l":76,"ö":192,"ä":222,"#":191,"y":89,"x":88,"c":67,"v":86,"n":78,"m":77,",":188,".":190,"-":189,"ArrowRight":39,"ArrowLeft":37,"ArrowUp":38,"ArrowDown":40,"PageDown":34,"Clear":12,"Home":36,"PageUp":33,"End":35,"Delete":46,"Insert":45,"Control":17,"AltGraph":18,"Meta":92,"Alt":18,"Shift":16,"CapsLock":20,"Tab":9,"Escape":27,"F1":112,"F2":113,";":188,":":190,"_":189,"'":191,"*":187,"Q":81,"W":87,"E":69,"R":82,"T":84,"Z":90,"S":83,"A":65,"D":68,"I":73,"U":85,"O":79,"Y":89,"X":88,"C":67,"F":70,"V":86,"G":71,"B":66,"H":72,"N":78,"J":74,"M":77,"K":75,"L":76,"P":80,"Ö":192,"Ä":222,"Ü":186,"!":49,"\"":50,"§":51,"$":52,"%":53,"&":54,"/":55,"(":56,")":57,"=":48,"?":219,"°":220}
 
 // HTML Elements
@@ -36,9 +38,13 @@ let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
 let multilabelSwitch = document.getElementById('multilabelSwitch');
 let welcomeArea = document.getElementById('welcomeArea');
 let uploadArea = document.getElementById('uploadArea');
+let enteredViewFilter = document.getElementById('enteredViewFilter');
+let submitViewsButton = document.getElementById('submitViewsButton');
 
 // Main/Setup
 setupHTMLElements();
+enteredViewFilter.value = '';
+submitViewsButtonClicked();
 progressTextDisplay();
 enteredLabelSet.value = 'Positive\r\nNegative';
 pagination0.selected = true;
@@ -48,6 +54,7 @@ annotationArea.hidden = true;
 settingSwitch.checked = false;
 wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
+
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
@@ -66,12 +73,11 @@ function setupHTMLElements(){
     settingSwitch.addEventListener('change', settingSwitchClicked);
     wholeDocumentSwitch.addEventListener('change', wholeDocumentSwitchClicked);
     multilabelSwitch.addEventListener('change', multilabelSwitchClicked);
+    submitViewsButton.addEventListener('click', submitViewsButtonClicked);
 }
 
 // Upload Button
-/* when a user uploads a file, load the contents into inputData
-*/
-// called when change in fileSelector
+
 function getFileData(uploadedFile){
     textIndex = 0;
     outputData = [];
@@ -110,14 +116,15 @@ function getFileData(uploadedFile){
                 outputData.push(parsedJson.data[i]);
             }
             progressTextDisplay();
+            enteredViewFilter.value = '';
+            submitViewsButtonClicked();
         }     
     });
     reader.readAsText(uploadedFile);
 }
 
 // Annotation
-/* 
-*/
+
 function makeLabelButton(label){
     // create Button Element in HTML
     let labelButton = document.createElement('button');
@@ -137,17 +144,17 @@ function addLabel(label){
         btn = document.getElementById(label + 'Button');
         if (btn.classList.contains('selected')){
             btn.classList.remove('selected');
-            outputData[textIndex-1].label = outputData[textIndex-1].label.filter(function(e) { return e !== label });
+            outputData[previousValidIndex(textIndex)].label = outputData[previousValidIndex(textIndex)].label.filter(function(e) { return e !== label });
         }
         else{
-            outputData[textIndex-1].label.push(label);
+            outputData[previousValidIndex(textIndex)].label.push(label);
         }
-        textIndex--;
+        textIndex = previousValidIndex(textIndex);
         progressTextDisplay();
     }
     else{
-        outputData[textIndex-1].label = [];
-        outputData[textIndex-1].label.push(label);
+        outputData[previousValidIndex(textIndex)].label = [];
+        outputData[previousValidIndex(textIndex)].label.push(label);
         progressTextDisplay();
     }
 }
@@ -187,7 +194,7 @@ function submitButtonClicked(){
             }
         }
     }
-    textIndex--;
+    textIndex = previousValidIndex(textIndex);
     progressTextDisplay();
 }
 
@@ -208,11 +215,11 @@ function progressTextDisplay(){
             for (i = 1; i <= paginationValue; i++){
                 if (textIndex >= i){
                     textFrontDisplay = document.getElementById('textFrontDisplay' + i);
-                    textFrontDisplay.value = inputData[textIndex - i];
+                    textFrontDisplay.value = inputData[previousValidIndex(textIndex)];
                 }
                 if (textIndex <= (inputData.length - i)){
                     textBackDisplay = document.getElementById('textBackDisplay' + i);
-                    textBackDisplay.value = inputData[textIndex + i];
+                    textBackDisplay.value = inputData[nextValidIndex(textIndex)];
                     if(textBackDisplay.value == 'undefined'){
                         textBackDisplay.value = '';
                     }
@@ -220,7 +227,7 @@ function progressTextDisplay(){
             }
             selectLabelButtons();
             textDisplay.value = inputData[textIndex];
-            textIndex++;
+            textIndex = nextValidIndex(textIndex);
         }
         else{
             alert ('Reached end of data.');
@@ -240,7 +247,7 @@ function progressTextDisplay(){
         if (textIndex < inputData.length){
             textDisplay.value = inputData[textIndex];
             selectLabelButtons();
-            textIndex ++;      
+            textIndex = nextValidIndex(textIndex);      
         }
         else{
             alert ('Reached end of data.');
@@ -257,11 +264,11 @@ function progressTextDisplay(){
 
     // show relevant child buttons
     if (labelObjectList.length > 0){
-        for(let i = 0; i < outputData[textIndex-1].label.length; i++){
+        for(let i = 0; i < outputData[previousValidIndex(textIndex)].label.length; i++){
             let num;
             for (let j = 0; j < labelObjectList.length; j++){
                 console.log(labelObjectList[j].name);
-                if (labelObjectList[j].name == outputData[textIndex-1].label[i]){
+                if (labelObjectList[j].name == outputData[previousValidIndex(textIndex)].label[i]){
                     num = j;
                     break;
                 }
@@ -305,8 +312,8 @@ function getSubLabelLevel(label){
 }
 
 function textBackwardButtonClicked(){
-    if (textIndex-2 >= 0){
-        textIndex-=2;
+    if (previousValidIndex(previousValidIndex(textIndex)) >= 0){
+        textIndex = previousValidIndex(previousValidIndex(textIndex));
         progressTextDisplay();
     }
 }
@@ -318,13 +325,20 @@ function textForwardButtonClicked(){
 }
 
 // Download Button
-/* write outputData to a .json file and download it
-*/
+
 function downloadButtonClicked(){
+
+    let cleanedOutputData = outputData;
+    for (let i = 0; i < outputData.length; i++){
+        for (let j = 0; j < outputData[i].label.length; j++){
+            cleanedOutputData[i].label[j] = outputData[i].label[j].substring(getSubLabelLevel(outputData[i].label[j]));
+        }
+        
+    }
 
     dataToWrite = new Object();
     dataToWrite.labelSet = labelSet;
-    dataToWrite.data = outputData;
+    dataToWrite.data = cleanedOutputData;
     let textFileAsBlob = new Blob([JSON.stringify(dataToWrite)], {type:'application/json'});
     let downloadLink = document.createElement("a");
     downloadLink.download = document.getElementById('fileNameToSaveAs').value;;
@@ -406,7 +420,7 @@ function changePaginationOption(){
         textDisplay.style = 'width:600px; height:50px';
         textDisplay.style.fontWeight = 'bold';
     }
-    textIndex--;
+    textIndex = previousValidIndex(textIndex);
     progressTextDisplay();
 }
 
@@ -463,7 +477,69 @@ function shortcutOkayButtonClicked(){
     alert ('Shortcuts set!');
 }
 
-//switches
+// views
+
+function submitViewsButtonClicked(){
+
+    if (enteredViewFilter.value == ''){
+        filterActive = false;
+        filteredDataIndices = [];
+        for (let i = 0; i < inputData.length; i++){
+            filteredDataIndices.push(i);
+        }
+    }
+    else if (!isValidFilter(enteredViewFilter.value)){
+        alert ('Filter is not valid.')
+        enteredViewFilter.value = '';
+        submitViewsButtonClicked();
+    }
+    else {
+        filterActive = true;
+        filteredDataIndices = [];
+        for (let i = 0; i < outputData.length; i++){
+            if (isRelevantText(outputData[i], enteredViewFilter.value)){
+                filteredDataIndices.push(i);
+            }
+            else{
+                filteredDataIndices.push(null);
+            }
+        }
+    }
+    
+}
+
+function isValidFilter(filter){
+
+}
+
+function isRelevantText(text, filter){
+    
+}
+
+function nextValidIndex(currentIndex){
+    let index = -1;
+    for (let i = currentIndex+1; i < inputData.length; i++){
+        if (filteredDataIndices[i] != null){
+            index = filteredDataIndices[i];
+            break;
+        }
+    }
+    return index;
+}
+
+function previousValidIndex(currentIndex){
+    let index = -1;
+    for (let i = currentIndex-1; i >= 0; i--){
+        if (filteredDataIndices[i] != null){
+            index = filteredDataIndices[i];
+            break;
+        }
+    }
+    return index;
+}
+
+// switches
+
 function settingSwitchClicked(){
     if(settingSwitch.checked == true){
         labelSetArea.hidden = false;
@@ -493,7 +569,7 @@ function wholeDocumentSwitchClicked(){
     }
     else{
         textDisplay.value = '';
-        textIndex--;
+        textIndex = previousValidIndex(textIndex);
         progressTextDisplay();
         textBackwardButton.disabled = false;
         textForwardButton.disabled = false;
@@ -516,7 +592,8 @@ function multilabelSwitchClicked(){
     }
 }
 
-//warning before closing the window
+// warning before closing the window
+
 function goodbye(e) {
     if(!e) e = window.event;
     //e.cancelBubble is supported by IE - this will kill the bubbling process.
@@ -533,6 +610,7 @@ window.onbeforeunload = goodbye;
 
 
 // keyboard shortcuts for the navigation buttons
+
 document.onkeyup = function(e){
     if (e.which == 37 || e.keyCode == 37){
         textBackwardButton.click();

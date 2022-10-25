@@ -275,7 +275,14 @@ function progressTextDisplay(){
 }
 
 function displayOutput(){
-    textDisplay.value = JSON.stringify(outputData);
+    let cleanedOutputData = outputData;
+    for (let i = 0; i < outputData.length; i++){
+        for (let j = 0; j < outputData[i].label.length; j++){
+            cleanedOutputData[i].label[j] = outputData[i].label[j].substring(getSubLabelLevel(outputData[i].label[j]));
+        }
+        
+    }
+    textDisplay.value = JSON.stringify(cleanedOutputData);
 }
 
 function selectLabelButtons(){
@@ -322,9 +329,17 @@ function textForwardButtonClicked(){
 */
 function downloadButtonClicked(){
 
+    let cleanedOutputData = outputData;
+    for (let i = 0; i < outputData.length; i++){
+        for (let j = 0; j < outputData[i].label.length; j++){
+            cleanedOutputData[i].label[j] = outputData[i].label[j].substring(getSubLabelLevel(outputData[i].label[j]));
+        }
+        
+    }
+
     dataToWrite = new Object();
     dataToWrite.labelSet = labelSet;
-    dataToWrite.data = outputData;
+    dataToWrite.data = cleanedOutputData;
     let textFileAsBlob = new Blob([JSON.stringify(dataToWrite)], {type:'application/json'});
     let downloadLink = document.createElement("a");
     downloadLink.download = document.getElementById('fileNameToSaveAs').value;;

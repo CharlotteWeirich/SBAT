@@ -24,6 +24,7 @@ Done:
 - make it so you can add labels to the set at any point
 - allow for setting multiple labels for one text
 - implement hierarchical label sets
+- implement keyboard shortcuts for the navigation buttons
 
 To do:
 - work on some CSS

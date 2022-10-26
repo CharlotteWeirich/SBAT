@@ -69,9 +69,7 @@ function setupHTMLElements(){
 }
 
 // Upload Button
-/* when a user uploads a file, load the contents into inputData
-*/
-// called when change in fileSelector
+
 function getFileData(uploadedFile){
     textIndex = 0;
     outputData = [];
@@ -116,8 +114,7 @@ function getFileData(uploadedFile){
 }
 
 // Annotation
-/* 
-*/
+
 function makeLabelButton(label){
     // create Button Element in HTML
     let labelButton = document.createElement('button');
@@ -324,8 +321,7 @@ function textForwardButtonClicked(){
 }
 
 // Download Button
-/* write outputData to a .json file and download it
-*/
+
 function downloadButtonClicked(){
 
     let cleanedOutputData = outputData;
@@ -478,6 +474,7 @@ function shortcutOkayButtonClicked(){
 }
 
 //switches
+
 function settingSwitchClicked(){
     if(settingSwitch.checked == true){
         labelSetArea.hidden = false;
@@ -544,7 +541,6 @@ function goodbye(e) {
     }
 }
 window.onbeforeunload = goodbye;
-
 
 // keyboard shortcuts for the navigation buttons
 document.onkeyup = function(e){

@@ -1,5 +1,8 @@
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    width: 680px;
 }
 
 button {
@@ -17,7 +20,7 @@ textarea {
 }
 
 .labelButton {
-    margin-right: 10px;
+    margin-right: 7px;
 }
 
 .selected {
@@ -29,6 +32,15 @@ textarea {
     margin-bottom: 10px;
 }
 
-#annotationArea {
-    
+#uploadArea {
+    margin-top: 10px;
+}
+
+#labelSetArea {
+    max-width: 600px;
+}
+
+#labelSetInstructions {
+    border-left: 3px  solid darkgray;
+    padding-left: 5px;
 }

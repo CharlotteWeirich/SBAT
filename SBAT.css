@@ -44,3 +44,7 @@ textarea {
     border-left: 3px  solid darkgray;
     padding-left: 5px;
 }
+
+#SBATlogo {
+    max-height: 80px;
+}

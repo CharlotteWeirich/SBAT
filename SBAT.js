@@ -49,6 +49,36 @@ settingSwitch.checked = false;
 wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
 
+if (localStorage.getItem('SBATData') != null){
+    annotationArea.hidden = false;
+    welcomeArea.hidden = true;
+    SBATData = JSON.parse(localStorage.getItem('SBATData'));
+    inputData = SBATData.inputData;
+    textIndex = SBATData.textIndex;
+    outputData = SBATData.outputData;
+    labelObjectList = SBATData.labelObjectList;
+    shortcutList = SBATData.shortcutList;
+    multilabel = SBATData.multilabel;
+
+    if (textIndex > 0){
+        textIndex--;
+    }
+    progressTextDisplay();
+
+    let labelText = '';
+    for (let i = 0; i < SBATData.labelSet.length; i ++){
+        labelText += SBATData.labelSet[i] + '\r\n';
+    }
+    labelText = labelText.slice(0, -2);
+    enteredLabelSet.value = labelText;
+    submitButtonClicked();
+
+    if (multilabel == true){
+        multilabelSwitch.checked = true;
+    }
+    multilabelSwitchClicked();
+}
+
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
     fileSelector.addEventListener('change', (event) => {
@@ -527,8 +557,21 @@ function multilabelSwitchClicked(){
     }
 }
 
+function saveDataToLocalStorage(){
+    SBATData = new Object();
+    SBATData.inputData = inputData;
+    SBATData.textIndex = textIndex;
+    SBATData.outputData = outputData;
+    SBATData.labelSet = labelSet;
+    SBATData.labelObjectList = labelObjectList;
+    SBATData.shortcutList = shortcutList;
+    SBATData.multilabel = multilabel;
+    localStorage.setItem('SBATData', JSON.stringify(SBATData));
+}
+
 //warning before closing the window
 function goodbye(e) {
+    saveDataToLocalStorage();
     if(!e) e = window.event;
     //e.cancelBubble is supported by IE - this will kill the bubbling process.
     e.cancelBubble = true;

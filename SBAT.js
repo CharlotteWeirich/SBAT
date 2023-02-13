@@ -9,6 +9,7 @@ let labelObjectList = [];
 let paginationValue = 0;
 let shortcutList;
 let multilabel = false;
+let saveToLocalStorage = false;
 let keyCodeList = {"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"d":68,"b":66,"a":65,"s":83,"i":73,"f":70,"k":75,"ß":219,"Dead":220,"+":187,"ü":186,"p":80,"o":79,"u":85,"z":90,"t":84,"r":82,"e":69,"w":87,"g":71,"h":72,"j":74,"l":76,"ö":192,"ä":222,"#":191,"y":89,"x":88,"c":67,"v":86,"n":78,"m":77,",":188,".":190,"-":189,"ArrowRight":39,"ArrowLeft":37,"ArrowUp":38,"ArrowDown":40,"PageDown":34,"Clear":12,"Home":36,"PageUp":33,"End":35,"Delete":46,"Insert":45,"Control":17,"AltGraph":18,"Meta":92,"Alt":18,"Shift":16,"CapsLock":20,"Tab":9,"Escape":27,"F1":112,"F2":113,";":188,":":190,"_":189,"'":191,"*":187,"Q":81,"W":87,"E":69,"R":82,"T":84,"Z":90,"S":83,"A":65,"D":68,"I":73,"U":85,"O":79,"Y":89,"X":88,"C":67,"F":70,"V":86,"G":71,"B":66,"H":72,"N":78,"J":74,"M":77,"K":75,"L":76,"P":80,"Ö":192,"Ä":222,"Ü":186,"!":49,"\"":50,"§":51,"$":52,"%":53,"&":54,"/":55,"(":56,")":57,"=":48,"?":219,"°":220}
 
 // HTML Elements
@@ -36,6 +37,7 @@ let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
 let multilabelSwitch = document.getElementById('multilabelSwitch');
 let welcomeArea = document.getElementById('welcomeArea');
 let uploadArea = document.getElementById('uploadArea');
+let localStorageSwitch = document.getElementById('localStorageSwitch');
 
 // Main/Setup
 setupHTMLElements();
@@ -48,6 +50,7 @@ annotationArea.hidden = true;
 settingSwitch.checked = false;
 wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
+localStorageSwitch.checked = false;
 
 if (localStorage.getItem('SBATData') != null){
     annotationArea.hidden = false;
@@ -59,6 +62,7 @@ if (localStorage.getItem('SBATData') != null){
     labelObjectList = SBATData.labelObjectList;
     shortcutList = SBATData.shortcutList;
     multilabel = SBATData.multilabel;
+    saveToLocalStorage = SBATData.saveToLocalStorage;
 
     if (textIndex > 0){
         textIndex--;
@@ -77,7 +81,13 @@ if (localStorage.getItem('SBATData') != null){
         multilabelSwitch.checked = true;
     }
     multilabelSwitchClicked();
+    if (saveToLocalStorage){
+        localStorageSwitch.checked = true;
+    }
+    localStorageSwitchClicked();
+    localStorage.removeItem('SBATData');
 }
+
 
 function setupHTMLElements(){
     downloadButton.addEventListener('click', downloadButtonClicked);
@@ -96,6 +106,7 @@ function setupHTMLElements(){
     settingSwitch.addEventListener('change', settingSwitchClicked);
     wholeDocumentSwitch.addEventListener('change', wholeDocumentSwitchClicked);
     multilabelSwitch.addEventListener('change', multilabelSwitchClicked);
+    localStorageSwitch.addEventListener('change', localStorageSwitchClicked);
 }
 
 // Upload Button
@@ -557,6 +568,15 @@ function multilabelSwitchClicked(){
     }
 }
 
+function localStorageSwitchClicked(){
+    if (localStorageSwitch.checked == true){
+        saveToLocalStorage = true;
+    }
+    else{
+        saveToLocalStorage = false;
+    }
+}
+
 function saveDataToLocalStorage(){
     SBATData = new Object();
     SBATData.inputData = inputData;
@@ -566,21 +586,26 @@ function saveDataToLocalStorage(){
     SBATData.labelObjectList = labelObjectList;
     SBATData.shortcutList = shortcutList;
     SBATData.multilabel = multilabel;
+    SBATData.saveToLocalStorage = saveToLocalStorage;
     localStorage.setItem('SBATData', JSON.stringify(SBATData));
 }
 
 //warning before closing the window
 function goodbye(e) {
-    saveDataToLocalStorage();
-    if(!e) e = window.event;
-    //e.cancelBubble is supported by IE - this will kill the bubbling process.
-    e.cancelBubble = true;
-    e.returnValue = 'You sure you want to leave?'; //This is displayed on the dialog
-
-    //e.stopPropagation works in Firefox.
-    if (e.stopPropagation) {
-        e.stopPropagation();
-        e.preventDefault();
+    if (saveToLocalStorage){
+        saveDataToLocalStorage();
+    }
+    else {
+        if(!e) e = window.event;
+        //e.cancelBubble is supported by IE - this will kill the bubbling process.
+        e.cancelBubble = true;
+        e.returnValue = 'You sure you want to leave?'; //This is displayed on the dialog
+    
+        //e.stopPropagation works in Firefox.
+        if (e.stopPropagation) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
     }
 }
 window.onbeforeunload = goodbye;

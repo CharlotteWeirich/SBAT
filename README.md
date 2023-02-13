@@ -25,10 +25,9 @@ Done:
 - allow for setting multiple labels for one text
 - implement hierarchical label sets
 - implement keyboard shortcuts for the navigation buttons
+- implement option to save data and settings to localStorage
 
 To do:
 - work on some CSS
-
-Future features:
-- provide views and only step through instances that meet certain criteria
-- add Github integration
+- allow for multi-class classification
+- create a workflow with GitHub/GitHub API

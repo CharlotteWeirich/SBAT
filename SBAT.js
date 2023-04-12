@@ -170,6 +170,48 @@ function makeLabelButton(label){
     })
 }
 
+function makeLabelDropDown(clsName, labels){
+
+    // create drop down element
+    let labelDropDown = document.createElement('select');
+    labelDropDown.id = clsName + 'DropDown';
+    let emptyOption = document.createElement('option');
+    emptyOption.id = 'emptyOption';
+    labelDropDown.appendChild(emptyOption);
+    for (let i = 0; i < labels.length; i++){
+        let labelOption = document.createElement('option');
+        labelOption.id = labels[i] + 'Option';
+        labelOption.innerHTML = labels[i]
+        labelDropDown.appendChild(labelOption);
+    }
+    let labelDropDownLabel = document.createElement('label');
+    labelDropDownLabel.for = clsName + 'DropDown';
+    labelDropDownLabel.id = clsName + 'DropDownLabel';
+    labelDropDownLabel.innerHTML = clsName;
+    labelButtonArea.appendChild(labelDropDown);
+    labelButtonArea.appendChild(labelDropDownLabel);
+
+    // give drop down functionality
+    document.getElementById(labelDropDown.id).addEventListener('change', function(){
+        e = document.getElementById(labelDropDown.id);
+        selectedLabel = e.options[e.selectedIndex].text;
+        setClassLabel(clsName, selectedLabel);
+    })
+}
+
+function setClassLabel(clsName, label){
+    const i = outputData[textIndex-1].label.findIndex(e => e .clsName === clsName)
+    if (i > -1){
+        outputData[textIndex-1].label[i].label = label;
+    }
+    else {
+        aO = new Object;
+        aO.clsName = clsName;
+        aO.label = label;
+        outputData[textIndex-1].label.push(aO);
+    }
+}
+
 function addLabel(label){
     if (multilabel == true){
         btn = document.getElementById(label + 'Button');
@@ -192,25 +234,49 @@ function addLabel(label){
 
 // set the label set to the user entered label set and create the annotation buttons
 function submitButtonClicked(){
+
     shortcutButton.disabled = false;
-    
+
     // remove the current label buttons
     if (labelSet.length > 0){
         for (let i = 0; i < labelSet.length; i++){
-        btn = document.getElementById(labelSet[i] + 'Button');
-        btn.parentNode.removeChild(btn);
+            if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
+                btn = document.getElementById(labelSet[i] + 'Button');
+                btn.parentNode.removeChild(btn);
+            }
+            if (labelSet[i][0] == '*'){
+                drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+                drpdwn.parentNode.removeChild(drpdwn);
+                drpdwnlbl = document.getElementById(labelSet[i] + 'DropDownLabel');
+                drpdwnlbl.parentNode.removeChild(drpdwnlbl);
+            }
         }
     }    
     // create new ones
     labelSet = enteredLabelSet.value.split(/\r?\n/);
     labelObjectList = []
     for (let i = 0; i < labelSet.length; i++){
-        labelObject = new Object();
-        labelObject.name = labelSet[i];
-        labelObject.hasParent = false;
-        labelObject.childrenList = [];
-        labelObjectList.push(labelObject);
-        makeLabelButton(labelSet[i]);
+        if (labelSet[i][0] == '*'){
+            clsLabelList = [];
+            for (let j = i + 1; j < labelSet.length; j++){
+                if (labelSet[j][0] == '-'){
+                    clsLabelList.push(labelSet[j]);
+                }
+                else {
+                    break;
+                }
+            }
+            makeLabelDropDown(labelSet[i], clsLabelList);
+            i = i + clsLabelList.length;
+        }
+        else {
+            labelObject = new Object();
+            labelObject.name = labelSet[i];
+            labelObject.hasParent = false;
+            labelObject.childrenList = [];
+            labelObjectList.push(labelObject);
+            makeLabelButton(labelSet[i]);
+        }
     }
 
     for (let i = 0; i < labelSet.length; i++){
@@ -225,6 +291,7 @@ function submitButtonClicked(){
             }
         }
     }
+
     textIndex--;
     progressTextDisplay();
 }
@@ -324,9 +391,11 @@ function displayOutput(){
 
 function selectLabelButtons(){
     for (let i = 0; i < labelSet.length; i++){
-        btn = document.getElementById(labelSet[i] + 'Button');
-        if (btn.classList.contains('selected')){
-            btn.classList.remove('selected');
+        if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
+            btn = document.getElementById(labelSet[i] + 'Button');
+            if (btn.classList.contains('selected')){
+                btn.classList.remove('selected');
+            }
         }
     }
     for (let i = 0; i < outputData[textIndex].label.length; i++){
@@ -366,12 +435,14 @@ function textForwardButtonClicked(){
 function downloadButtonClicked(){
 
     let cleanedOutputData = outputData;
+    /*
     for (let i = 0; i < outputData.length; i++){
         for (let j = 0; j < outputData[i].label.length; j++){
             cleanedOutputData[i].label[j] = outputData[i].label[j].substring(getSubLabelLevel(outputData[i].label[j]));
         }
         
     }
+    */
 
     dataToWrite = new Object();
     dataToWrite.labelSet = labelSet;

@@ -334,8 +334,14 @@ function progressTextDisplay(){
             displayOutput();
             if (labelSet.length > 0){
                 for (let i = 0; i < labelSet.length; i++){
-                btn = document.getElementById(labelSet[i] + 'Button');
-                btn.disabled = true;
+                    if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
+                        btn = document.getElementById(labelSet[i] + 'Button');
+                        btn.disabled = true;
+                    }
+                    if (labelSet[i][0] == '*'){
+                        drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+                        drpdwn.disabled = true;
+                    }
                 }
             }
         }
@@ -352,8 +358,14 @@ function progressTextDisplay(){
             displayOutput();
             if (labelSet.length > 0){
                 for (let i = 0; i < labelSet.length; i++){
-                btn = document.getElementById(labelSet[i] + 'Button');
-                btn.disabled = true;
+                    if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
+                        btn = document.getElementById(labelSet[i] + 'Button');
+                        btn.disabled = true;
+                    }
+                    if (labelSet[i][0] == '*'){
+                        drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+                        drpdwn.disabled = true;
+                    }
                 }
             }   
         }
@@ -399,8 +411,18 @@ function selectLabelButtons(){
         }
     }
     for (let i = 0; i < outputData[textIndex].label.length; i++){
-        btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
-        btn.classList.add('selected');
+        if (!'clsName' in outputData[textIndex].label[i]){
+            btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
+            btn.classList.add('selected');
+        }
+        if ('clsName' in outputData[textIndex].label[i]){
+            lO = outputData[textIndex].label[i];
+            drpdwn = document.getElementById(lO.clsName + 'DropDown');
+            if(lO.label == ''){
+                drpdwn.value = 0;
+            }
+            drpdwn.value = lO.label;
+        }
     }
 }
 

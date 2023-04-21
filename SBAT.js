@@ -181,13 +181,13 @@ function makeLabelDropDown(clsName, labels){
     for (let i = 0; i < labels.length; i++){
         let labelOption = document.createElement('option');
         labelOption.id = labels[i] + 'Option';
-        labelOption.innerHTML = labels[i]
+        labelOption.innerHTML = labels[i].substring(1);
         labelDropDown.appendChild(labelOption);
     }
     let labelDropDownLabel = document.createElement('label');
     labelDropDownLabel.for = clsName + 'DropDown';
     labelDropDownLabel.id = clsName + 'DropDownLabel';
-    labelDropDownLabel.innerHTML = clsName;
+    labelDropDownLabel.innerHTML = clsName.substring(1);
     labelButtonArea.appendChild(labelDropDown);
     labelButtonArea.appendChild(labelDropDownLabel);
 

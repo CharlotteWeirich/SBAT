@@ -26,8 +26,8 @@ Done:
 - implement hierarchical label sets
 - implement keyboard shortcuts for the navigation buttons
 - implement option to save data and settings to localStorage
+- allow for multi-class classification
 
 To do:
 - work on some CSS
-- allow for multi-class classification
 - create a workflow with GitHub/GitHub API

@@ -409,6 +409,10 @@ function selectLabelButtons(){
                 btn.classList.remove('selected');
             }
         }
+        if (labelSet[i][0] == '*'){
+            drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+            drpdwn.value = 0;
+        }
     }
     for (let i = 0; i < outputData[textIndex].label.length; i++){
         if (!'clsName' in outputData[textIndex].label[i]){
@@ -418,9 +422,6 @@ function selectLabelButtons(){
         if ('clsName' in outputData[textIndex].label[i]){
             lO = outputData[textIndex].label[i];
             drpdwn = document.getElementById(lO.clsName + 'DropDown');
-            if(lO.label == ''){
-                drpdwn.value = 0;
-            }
             drpdwn.value = lO.label;
         }
     }

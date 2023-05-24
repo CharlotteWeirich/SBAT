@@ -76,6 +76,7 @@ if (localStorage.getItem('SBATData') != null){
     labelText = labelText.slice(0, -2);
     enteredLabelSet.value = labelText;
     submitButtonClicked();
+    addShortcutFunctionality();
 
     if (multilabel == true){
         multilabelSwitch.checked = true;
@@ -415,11 +416,11 @@ function selectLabelButtons(){
         }
     }
     for (let i = 0; i < outputData[textIndex].label.length; i++){
-        if (!'clsName' in outputData[textIndex].label[i]){
+        if (typeof outputData[textIndex].label[i] ==='string' || outputData[textIndex].label[i]instanceof String){
             btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
             btn.classList.add('selected');
         }
-        if ('clsName' in outputData[textIndex].label[i]){
+        else if ('clsName' in outputData[textIndex].label[i]){
             lO = outputData[textIndex].label[i];
             drpdwn = document.getElementById(lO.clsName + 'DropDown');
             drpdwn.value = lO.label;
@@ -591,6 +592,12 @@ function shortcutOkayButtonClicked(){
     shortcutButton.disabled = false;
 
     // add shortcut functionality
+    addShortcutFunctionality();
+    
+    alert ('Shortcuts set!');
+}
+
+function addShortcutFunctionality(){
     document.onkeyup = function(e){
         if (e.which == 37 || e.keyCode == 37){
             textBackwardButton.click();
@@ -605,7 +612,6 @@ function shortcutOkayButtonClicked(){
             }
         }
     }
-    alert ('Shortcuts set!');
 }
 
 //switches

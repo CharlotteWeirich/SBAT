@@ -690,6 +690,48 @@ function saveDataToLocalStorage(){
     localStorage.setItem('SBATData', JSON.stringify(SBATData));
 }
 
+function loadConfigFile(){
+
+}
+
+function loadConfigSettings(settings){
+    annotationArea.hidden = false;
+    welcomeArea.hidden = true;
+    multilabel = settings.multilabel;
+    shortcutList = settings.shortcutList;
+
+    let labelText = '';
+    for (let i = 0; i < settings.labelSet.length; i ++){
+        labelText += settings.labelSet[i] + '\r\n';
+    }
+    labelText = labelText.slice(0, -2);
+    enteredLabelSet.value = labelText;
+    submitButtonClicked();
+    addShortcutFunctionality();
+
+    if (settings.paginationValue == 0){
+        pagination0.selected = true;
+    }
+    else if (settings.paginationValue == 1){
+        pagination1.selected = true;
+    }
+    else if (settings.paginationValue == 2){
+        pagination2.selected = true;
+    }
+    else if (settings.paginationValue == 3){
+        pagination3.selected = true;
+    }
+    changePaginationOption();
+
+    if (multilabel == true){
+        multilabelSwitch.checked = true;
+    }
+
+    if (settings.hideSettings == true){
+        settingSwitch.hidden = true;
+    }
+}
+
 //warning before closing the window
 function goodbye(e) {
     if (saveToLocalStorage){

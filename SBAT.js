@@ -51,7 +51,7 @@ settingSwitch.checked = false;
 wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
 localStorageSwitch.checked = false;
-loadConfigFile('/config.json');
+loadConfigFile('https://github.com/CharlotteWeirich/SBAT/blob/loadConfig/config.json');
 
 if (localStorage.getItem('SBATData') != null){
     annotationArea.hidden = false;

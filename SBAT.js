@@ -700,7 +700,7 @@ function loadConfigFile(file){
         alert(allText);
 
     }
-    rawFile.send(null);
+    rawFile.send();
 }
 
 function loadConfigSettings(settings){

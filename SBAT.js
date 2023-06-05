@@ -51,7 +51,7 @@ settingSwitch.checked = false;
 wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
 localStorageSwitch.checked = false;
-loadConfigFile('https://github.com/CharlotteWeirich/SBAT/blob/loadConfig/config.json');
+loadConfigFile('https://charlotteweirich.github.io/SBAT/config.json');
 
 if (localStorage.getItem('SBATData') != null){
     annotationArea.hidden = false;
@@ -692,20 +692,10 @@ function saveDataToLocalStorage(){
 }
 
 function loadConfigFile(file){
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send();
+    $.getJSON(file)
+    .done(function( data ) {
+       console.log(data)
+    });
 }
 
 function loadConfigSettings(settings){

@@ -728,11 +728,12 @@ function loadConfigSettings(settings){
     changePaginationOption();
 
     if (multilabel == true){
-        console.log("check");
+        console.log("multilabel check");
         multilabelSwitch.checked = true;
     }
 
     if (settings.hideSettings == true){
+        console.log("settings check");
         settingSwitch.hidden = true;
     }
 }

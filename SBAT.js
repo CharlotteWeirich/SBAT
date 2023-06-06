@@ -729,8 +729,8 @@ function loadConfigSettings(settings){
 
     if (multilabel == true){
         multilabelSwitch.checked = true;
-        multilabelSwitchClicked();
     }
+    multilabelSwitchClicked();
 
     if (settings.hideSettings == true){
         settingSwitch.hidden = true;

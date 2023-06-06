@@ -694,8 +694,9 @@ function saveDataToLocalStorage(){
 function loadConfigFile(file){
     $.getJSON(file)
     .done(function( data ) {
-       console.log(data.annotators[0][3]);
-       loadConfigSettings(data.annotators[0].settings);
+        console.log(data);
+        console.log(data.annotators[0].settings);
+        loadConfigSettings(data.annotators[0].settings);
     });
 }
 

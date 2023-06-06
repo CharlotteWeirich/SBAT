@@ -695,6 +695,7 @@ function loadConfigFile(file){
     $.getJSON(file)
     .done(function( data ) {
        console.log(data.annotators[0]);
+       loadConfigSettings(data.annotators[0].settings);
     });
 }
 

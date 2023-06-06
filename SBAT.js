@@ -33,6 +33,7 @@ let textForwardButton = document.getElementById('textForwardButton');
 let numberOfTexts = document.getElementById('numberOfTexts');
 let labelSetArea = document.getElementById('labelSetArea');
 let settingSwitch = document.getElementById('settingSwitch');
+let settingSwitchLabel = document.getElementById('settingSwitchLabel');
 let wholeDocumentSwitch = document.getElementById('wholeDocumentSwitch');
 let multilabelSwitch = document.getElementById('multilabelSwitch');
 let welcomeArea = document.getElementById('welcomeArea');
@@ -703,7 +704,6 @@ function loadConfigSettings(settings){
     welcomeArea.hidden = true;
     multilabel = settings.multilabel;
     shortcutList = settings.shortcutList;
-    console.log(multilabel);
 
     let labelText = '';
     for (let i = 0; i < settings.labelSet.length; i ++){
@@ -729,13 +729,12 @@ function loadConfigSettings(settings){
     changePaginationOption();
 
     if (multilabel == true){
-        console.log("multilabel check");
         multilabelSwitch.checked = true;
     }
 
     if (settings.hideSettings == true){
-        console.log("settings check");
         settingSwitch.hidden = true;
+        settingSwitchLabel.hidden = true;
     }
 }
 

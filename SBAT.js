@@ -703,6 +703,7 @@ function loadConfigSettings(settings){
     welcomeArea.hidden = true;
     multilabel = settings.multilabel;
     shortcutList = settings.shortcutList;
+    console.log(multilabel);
 
     let labelText = '';
     for (let i = 0; i < settings.labelSet.length; i ++){

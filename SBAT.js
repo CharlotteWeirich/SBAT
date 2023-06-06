@@ -699,6 +699,7 @@ function loadConfigFile(file){
 }
 
 function loadConfigSettings(settings){
+    console.log(settings);
     annotationArea.hidden = false;
     welcomeArea.hidden = true;
     multilabel = settings.multilabel;

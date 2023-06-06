@@ -1,6 +1,6 @@
 {"annotators":[{"user": "User1", "files": ["File1", "File2"], 
 "settings": [{"labelSet":["Negative", "Positive"], 
 "shortcutList":{"Negative": "n", "Positive": "p"}, 
-"multilabel": "true", 
+"multilabel": true, 
 "paginationValue": "1", 
-"hideSettings": "true"}]}]}
+"hideSettings": true}]}]}

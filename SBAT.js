@@ -729,6 +729,7 @@ function loadConfigSettings(settings){
 
     if (multilabel == true){
         multilabelSwitch.checked = true;
+        multilabelSwitchClicked();
     }
 
     if (settings.hideSettings == true){

@@ -132,7 +132,6 @@ function getFileData(uploadedFile){
 
 function loadTxt(data){
     inputData = data.split(/\r?\n/);
-    console.log(inputData);
     for (i = 0; i < inputData.length; i++){
         const aO = new Object();
         aO.text = inputData[i];
@@ -730,7 +729,6 @@ function makeFileSelection(files){
             $.get('./' + selectedFile)
             .done(function(data) {
                 content = data;
-                console.log(content)
                 loadTxt(content);
             });
         }

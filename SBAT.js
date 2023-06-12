@@ -53,7 +53,6 @@ wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
 localStorageSwitch.checked = false;
 loadConfigFile('./config.json');
-console.log('hello');
 
 if (localStorage.getItem('SBATData') != null){
     annotationArea.hidden = false;
@@ -696,8 +695,21 @@ function saveDataToLocalStorage(){
 function loadConfigFile(file){
     $.getJSON(file)
     .done(function( data ) {
+        makeFileSelection(data.annotators[0].files);
         loadConfigSettings(data.annotators[0].settings[0]);
     });
+}
+
+function makeFileSelection(files){
+    let fileSelection = document.createElement('select');
+    fileSelection.id = 'fileSelection';
+    for (i = 0; i < files.length; i++){
+        let fileOption = document.createElement('option');
+        fileOption.id = files[i] + 'Option';
+        fileOption.innerHTML = files[i];
+        fileSelection.appendChild(fileOption);
+    }
+    annotationArea.appendChild(fileSelection);
 }
 
 function loadConfigSettings(settings){

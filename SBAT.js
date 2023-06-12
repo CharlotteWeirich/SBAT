@@ -703,6 +703,7 @@ function loadConfigFile(file){
 function makeFileSelection(files){
     let fileSelection = document.createElement('select');
     fileSelection.id = 'fileSelection';
+    fileSelection.appendChild(document.createElement('option'));
     for (i = 0; i < files.length; i++){
         let fileOption = document.createElement('option');
         fileOption.id = files[i] + 'Option';
@@ -748,6 +749,7 @@ function loadConfigSettings(settings){
     if (settings.hideSettings == true){
         settingSwitch.hidden = true;
         settingSwitchLabel.hidden = true;
+        uploadArea.hidden = true;
     }
 }
 

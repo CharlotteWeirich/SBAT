@@ -132,6 +132,7 @@ function getFileData(uploadedFile){
 
 function loadTxt(data){
     inputData = data.split(/\r?\n/);
+    console.log(inputData);
     for (i = 0; i < inputData.length; i++){
         const aO = new Object();
         aO.text = inputData[i];
@@ -725,17 +726,15 @@ function makeFileSelection(files){
         if(selectedFile.endsWith('.txt')){
             content = '';
             $.get('./' + selectedFile, function(data) {
-                alert(data);
                 content = data;
             });
             loadTxt(content);
         }
         else if (selectedFile.endsWith('.json')){
             $.get('./' + selectedFile, function(data) {
-                alert(data);
                 content = data;
             });
-            loadJson();
+            loadJson(content);
         }
     })
 }

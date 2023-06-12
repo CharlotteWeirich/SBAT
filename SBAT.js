@@ -749,7 +749,7 @@ function loadConfigSettings(settings){
     if (settings.hideSettings == true){
         settingSwitch.hidden = true;
         settingSwitchLabel.hidden = true;
-        uploadArea.hidden = true;
+        fileSelector.hidden = true;
     }
 }
 

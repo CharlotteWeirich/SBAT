@@ -726,16 +726,18 @@ function makeFileSelection(files){
         outputData = [];
         content = '';
         if(selectedFile.endsWith('.txt')){
-            $.get('./' + selectedFile, function(data) {
+            $.get('./' + selectedFile)
+            .done(function(data) {
                 content = data;
-                console.log(content);
+                console.log(content)
             });
             loadTxt(content);
         }
         else if (selectedFile.endsWith('.json')){
-            $.get('./' + selectedFile, function(data) {
+            $.get('./' + selectedFile)
+            .done(function(data) {
                 content = data;
-            });
+            }); 
             loadJson(content);
         }
     })

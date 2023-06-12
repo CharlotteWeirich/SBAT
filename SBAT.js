@@ -730,15 +730,15 @@ function makeFileSelection(files){
             .done(function(data) {
                 content = data;
                 console.log(content)
+                loadTxt(content);
             });
-            loadTxt(content);
         }
         else if (selectedFile.endsWith('.json')){
             $.get('./' + selectedFile)
             .done(function(data) {
                 content = data;
+                loadJson(content);
             }); 
-            loadJson(content);
         }
     })
 }

@@ -125,7 +125,8 @@ function getFileData(uploadedFile){
         }
         if (uploadedFile.type == 'application/json'){
             loadJson(e.target.result);
-        }     
+        }
+        progressTextDisplay();
     });
     reader.readAsText(uploadedFile);
 }
@@ -139,7 +140,6 @@ function loadTxt(data){
         aO.label = [];
         outputData.push(aO);
     }
-    progressTextDisplay();
 }
 
 function loadJson(data){
@@ -163,7 +163,6 @@ function loadJson(data){
         inputData.push(parsedJson.data[i].text);
         outputData.push(parsedJson.data[i]);
     }
-    progressTextDisplay();
 }
 
 // Annotation

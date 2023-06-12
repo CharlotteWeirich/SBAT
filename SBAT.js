@@ -722,6 +722,8 @@ function makeFileSelection(files){
 
     fileSelection.addEventListener('change', function(){
         selectedFile = fileSelection.options[fileSelection.selectedIndex].text;
+        textIndex = 0;
+        outputData = [];
         if(selectedFile.endsWith('.txt')){
             content = '';
             $.get('./' + selectedFile, function(data) {

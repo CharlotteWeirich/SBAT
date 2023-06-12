@@ -1,4 +1,4 @@
-{"annotators":[{"user": "User1", "files": ["File1", "File2"], 
+{"annotators":[{"user": "User1", "files": ["example.txt", "example2.txt"], 
 "settings": [{"labelSet":["Negative", "Positive"], 
 "shortcutList":{"Negative": "n", "Positive": "p"}, 
 "multilabel": true, 

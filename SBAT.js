@@ -121,40 +121,48 @@ function getFileData(uploadedFile){
     let reader = new FileReader();
     reader.addEventListener('load', function (e){
         if (uploadedFile.type == 'text/plain'){
-            inputData = e.target.result.split(/\r?\n/);
-            for (i = 0; i < inputData.length; i++){
-                const aO = new Object();
-                aO.text = inputData[i];
-                aO.label = [];
-                outputData.push(aO);
-            }
-            progressTextDisplay();
+            loadTxt(e.target.result);
         }
         if (uploadedFile.type == 'application/json'){
-            json = e.target.result;
-            parsedJson = JSON.parse(json);
-            inputData = [];
-            enteredLabelSet.value = '';
-            if (parsedJson.labelSet.length > 0){
-                for (let i = 0; i < parsedJson.labelSet.length; i++){
-                    if (i == parsedJson.labelSet.length-1){
-                        enteredLabelSet.value += parsedJson.labelSet[i]
-                    }
-                    else{
-                        enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
-                    }
-                }
-                submitButtonClicked();
-            }
-
-            for (let i = 0; i < parsedJson.data.length; i++){
-                inputData.push(parsedJson.data[i].text);
-                outputData.push(parsedJson.data[i]);
-            }
-            progressTextDisplay();
+            loadJson(e.target.result);
         }     
     });
     reader.readAsText(uploadedFile);
+}
+
+function loadTxt(data){
+    inputData = data.split(/\r?\n/);
+    for (i = 0; i < inputData.length; i++){
+        const aO = new Object();
+        aO.text = inputData[i];
+        aO.label = [];
+        outputData.push(aO);
+    }
+    progressTextDisplay();
+}
+
+function loadJson(data){
+    json = data;
+    parsedJson = JSON.parse(json);
+    inputData = [];
+    enteredLabelSet.value = '';
+    if (parsedJson.labelSet.length > 0){
+        for (let i = 0; i < parsedJson.labelSet.length; i++){
+            if (i == parsedJson.labelSet.length-1){
+                enteredLabelSet.value += parsedJson.labelSet[i]
+            }
+            else{
+                enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
+            }
+        }
+        submitButtonClicked();
+    }
+
+    for (let i = 0; i < parsedJson.data.length; i++){
+        inputData.push(parsedJson.data[i].text);
+        outputData.push(parsedJson.data[i]);
+    }
+    progressTextDisplay();
 }
 
 // Annotation
@@ -711,6 +719,25 @@ function makeFileSelection(files){
         fileSelection.appendChild(fileOption);
     }
     annotationArea.appendChild(fileSelection);
+
+    fileSelection.addEventListener('change', function(){
+        selectedFile = fileSelection.options[fileSelection.selectedIndex].text;
+        if(selectedFile.endsWith('.txt')){
+            content = '';
+            $.get('./' + selectedFile, function(data) {
+                alert(data);
+                content = data;
+            });
+            loadTxt(content);
+        }
+        else if (selectedFile.endsWith('.json')){
+            $.get('./' + selectedFile, function(data) {
+                alert(data);
+                content = data;
+            });
+            loadJson();
+        }
+    })
 }
 
 function loadConfigSettings(settings){
@@ -749,7 +776,7 @@ function loadConfigSettings(settings){
     if (settings.hideSettings == true){
         settingSwitch.hidden = true;
         settingSwitchLabel.hidden = true;
-        fileSelector.hidden = true;
+        uploadArea.hidden = true;
     }
 }
 

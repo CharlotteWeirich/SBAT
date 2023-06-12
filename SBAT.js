@@ -53,6 +53,7 @@ wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
 localStorageSwitch.checked = false;
 loadConfigFile('./config.json');
+console.log(hello);
 
 if (localStorage.getItem('SBATData') != null){
     annotationArea.hidden = false;

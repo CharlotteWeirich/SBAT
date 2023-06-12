@@ -724,10 +724,11 @@ function makeFileSelection(files){
         selectedFile = fileSelection.options[fileSelection.selectedIndex].text;
         textIndex = 0;
         outputData = [];
+        content = '';
         if(selectedFile.endsWith('.txt')){
-            content = '';
             $.get('./' + selectedFile, function(data) {
                 content = data;
+                console.log(content);
             });
             loadTxt(content);
         }

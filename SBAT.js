@@ -326,6 +326,12 @@ function progressTextDisplay(){
                     textFrontDisplay = document.getElementById('textFrontDisplay' + i);
                     textFrontDisplay.value = inputData[textIndex - i];
                 }
+                if(textIndex < paginationValue){
+                    if(document.getElementById('textFrontDisplay' + (textIndex + 1))){
+                        textFrontDisplay = document.getElementById('textFrontDisplay' + (textIndex + 1));
+                        textFrontDisplay.value = '';
+                    }
+                }
                 if (textIndex <= (inputData.length - i)){
                     textBackDisplay = document.getElementById('textBackDisplay' + i);
                     textBackDisplay.value = inputData[textIndex + i];

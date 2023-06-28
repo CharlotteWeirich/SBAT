@@ -17,11 +17,6 @@
         <P>Please upload your file below.</P>
     </div>
 
-    <div id="authenticationArea">
-        <textarea style="width: 200px; height: 100px;" id="personalAccessToken"></textarea>
-        <button id="authenticatinOkayButton">Okay</button>
-    </div>
-
     <div id="annotationArea">
         <textarea style="width:600px; height:200px" id="textDisplay" readonly></textarea>
         <textarea id="numberOfTexts" readonly style="width:50px; height:20px"></textarea>
@@ -95,6 +90,11 @@
         <div>Enter a file name</div>
         <textarea style="width:200px; height:20px" id="fileNameToSaveAs"></textarea>
         <button id="downloadButton" type="button">Download</button>
+    </div>
+    <div id="authenticationArea">
+        <p>Please enter your personal access token below.</p>
+        <textarea style="width: 200px; height: 25px;" id="personalAccessToken"></textarea>
+        <button id="authenticatinOkayButton">Okay</button>
     </div>
     <script type="module">
         import { Octokit, App } from "https://esm.sh/octokit";

@@ -717,6 +717,9 @@ function loadConfigFile(file){
 function makeFileSelection(files){
     let fileSelection = document.createElement('select');
     fileSelection.id = 'fileSelection';
+    let fileSelectionLabel = document.createElement('label');
+    fileSelectionLabel.for = 'fileSelection';
+    fileSelection.innerHTML = 'Select file';
     fileSelection.appendChild(document.createElement('option'));
     for (i = 0; i < files.length; i++){
         let fileOption = document.createElement('option');
@@ -725,6 +728,7 @@ function makeFileSelection(files){
         fileSelection.appendChild(fileOption);
     }
     annotationArea.appendChild(fileSelection);
+    annotationArea.appendChild(fileSelectionLabel);
 
     fileSelection.addEventListener('change', function(){
         selectedFile = fileSelection.options[fileSelection.selectedIndex].text;

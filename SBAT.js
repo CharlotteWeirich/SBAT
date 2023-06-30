@@ -1,3 +1,5 @@
+import { Octokit, App } from "https://esm.sh/octokit";
+
 let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];
 let textIndex = 0;

@@ -1,4 +1,4 @@
-import { Octokit, App } from "https://esm.sh/octokit";
+import { Octokit } from "https://cdn.skypack.dev/octokit";
 
 let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];

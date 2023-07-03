@@ -1,4 +1,4 @@
-import { Octokit } from "https://cdn.pika.dev/@octokit/request";
+import { Octokit } from "https://esm.sh/octokit";
 
 let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];

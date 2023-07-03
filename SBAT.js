@@ -809,6 +809,7 @@ async function authenticationOkayButtonClicked(){
         data: { login },
     } = await octokit.rest.users.getAuthenticated();
     console.log("Hello, %s", login);
+}
 
 //warning before closing the window
 function goodbye(e) {

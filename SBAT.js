@@ -728,7 +728,7 @@ function makeFileSelection(files){
     fileSelectionLabel.for = 'fileSelection';
     fileSelection.innerHTML = 'Select file';
     fileSelection.appendChild(document.createElement('option'));
-    for (i = 0; i < files.length; i++){
+    for (let i = 0; i < files.length; i++){
         let fileOption = document.createElement('option');
         fileOption.id = files[i] + 'Option';
         fileOption.innerHTML = files[i];

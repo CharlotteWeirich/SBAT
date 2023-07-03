@@ -1,4 +1,4 @@
-import { Octokit } from "https://esm.sh/octokit";
+import { Octokit } from "https://esm.sh/octokit@2.1.0";
 
 let inputData = ['This movie sucks.', 'I loved it!', 'A waste of time.',
                 'Truly awful', 'Most hilarious movie ever'];

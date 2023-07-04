@@ -288,7 +288,7 @@ function submitButtonClicked(){
             i = i + clsLabelList.length;
         }
         else {
-            labelObject = new Object();
+            let labelObject = new Object();
             labelObject.name = labelSet[i];
             labelObject.hasParent = false;
             labelObject.childrenList = [];

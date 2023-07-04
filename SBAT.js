@@ -428,24 +428,24 @@ function displayOutput(){
 function selectLabelButtons(){
     for (let i = 0; i < labelSet.length; i++){
         if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
-            btn = document.getElementById(labelSet[i] + 'Button');
+            let btn = document.getElementById(labelSet[i] + 'Button');
             if (btn.classList.contains('selected')){
                 btn.classList.remove('selected');
             }
         }
         if (labelSet[i][0] == '*'){
-            drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+            let drpdwn = document.getElementById(labelSet[i] + 'DropDown');
             drpdwn.value = 0;
         }
     }
     for (let i = 0; i < outputData[textIndex].label.length; i++){
         if (typeof outputData[textIndex].label[i] ==='string' || outputData[textIndex].label[i]instanceof String){
-            btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
+            let btn = document.getElementById(outputData[textIndex].label[i] + 'Button');
             btn.classList.add('selected');
         }
         else if ('clsName' in outputData[textIndex].label[i]){
-            lO = outputData[textIndex].label[i];
-            drpdwn = document.getElementById(lO.clsName + 'DropDown');
+            let lO = outputData[textIndex].label[i];
+            let drpdwn = document.getElementById(lO.clsName + 'DropDown');
             drpdwn.value = lO.label;
         }
     }
@@ -491,7 +491,7 @@ function downloadButtonClicked(){
     }
     */
 
-    dataToWrite = new Object();
+    let dataToWrite = new Object();
     dataToWrite.labelSet = labelSet;
     dataToWrite.data = cleanedOutputData;
     let textFileAsBlob = new Blob([JSON.stringify(dataToWrite)], {type:'application/json'});
@@ -602,12 +602,12 @@ function shortcutButtonClicked(){
 function shortcutOkayButtonClicked(){
 
     // fill the shortcutList with the entered shortcuts & delete html elements
-    shortcutList = new Object();
+    let shortcutList = new Object();
     for(i = 0; i < labelSet.length; i++){
-        shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
+        let shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutList[labelSet[i]] = shortcutField.value;
         shortcutField.parentNode.removeChild(shortcutField);
-        shortcutFieldLabel = document.getElementById(labelSet[i] + 'Label');
+        let shortcutFieldLabel = document.getElementById(labelSet[i] + 'Label');
         shortcutFieldLabel.parentNode.removeChild(shortcutFieldLabel);
     }
 
@@ -660,7 +660,7 @@ function wholeDocumentSwitchClicked(){
         textForwardButton.disabled = true;
         if (labelSet.length > 0){
             for (let i = 0; i < labelSet.length; i++){
-            btn = document.getElementById(labelSet[i] + 'Button');
+            let btn = document.getElementById(labelSet[i] + 'Button');
             btn.disabled = true;
             }
         }
@@ -674,7 +674,7 @@ function wholeDocumentSwitchClicked(){
         textForwardButton.disabled = false;
         if (labelSet.length > 0){
             for (let i = 0; i < labelSet.length; i++){
-            btn = document.getElementById(labelSet[i] + 'Button');
+            let btn = document.getElementById(labelSet[i] + 'Button');
             btn.disabled = false;
             }
         }
@@ -701,7 +701,7 @@ function localStorageSwitchClicked(){
 }
 
 function saveDataToLocalStorage(){
-    SBATData = new Object();
+    let SBATData = new Object();
     SBATData.inputData = inputData;
     SBATData.textIndex = textIndex;
     SBATData.outputData = outputData;

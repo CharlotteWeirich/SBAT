@@ -521,9 +521,9 @@ function downloadButtonClicked(){
 function changePaginationOption(){
 
     if (pagination0.selected == true){
-        for(i = 1; i <= paginationValue; i++){
-            textFrontDiv = document.getElementById('textFrontDiv' + i);
-            textBackDiv = document.getElementById('textBackDiv' + i);
+        for(let i = 1; i <= paginationValue; i++){
+            let textFrontDiv = document.getElementById('textFrontDiv' + i);
+            let textBackDiv = document.getElementById('textBackDiv' + i);
             textFrontDiv.parentNode.removeChild(textFrontDiv);
             textBackDiv.parentNode.removeChild(textBackDiv);
         }
@@ -532,9 +532,9 @@ function changePaginationOption(){
         paginationValue = 0;
     }
     else {
-        for(i = 1; i <= paginationValue; i++){
-            textFrontDiv = document.getElementById('textFrontDiv' + i);
-            textBackDiv = document.getElementById('textBackDiv' + i);
+        for(let i = 1; i <= paginationValue; i++){
+            let textFrontDiv = document.getElementById('textFrontDiv' + i);
+            let textBackDiv = document.getElementById('textBackDiv' + i);
             textFrontDiv.parentNode.removeChild(textFrontDiv);
             textBackDiv.parentNode.removeChild(textBackDiv);
         }
@@ -547,10 +547,10 @@ function changePaginationOption(){
         if (pagination3.selected == true){
             paginationValue = 3;
         }
-        for (i = 1; i <= paginationValue; i++){
-            textFrontDiv = document.createElement('div');
+        for (let i = 1; i <= paginationValue; i++){
+            let textFrontDiv = document.createElement('div');
             textFrontDiv.id = 'textFrontDiv' + i;
-            textFrontDisplay = document.createElement('textarea');
+            let textFrontDisplay = document.createElement('textarea');
             textFrontDisplay.style = 'width:600px; height:50px';
             textFrontDisplay.readonly = true;
             textFrontDisplay.id = 'textFrontDisplay' + i;
@@ -559,13 +559,13 @@ function changePaginationOption(){
                 textFrontDiv.appendChild(textFrontDisplay);
             }
             else{
-                textFrontDivFront = document.getElementById('textFrontDiv' + (i-1));
+                let textFrontDivFront = document.getElementById('textFrontDiv' + (i-1));
                 annotationArea.insertBefore(textFrontDiv, textFrontDivFront);
                 textFrontDiv.appendChild(textFrontDisplay);
             }
-            textBackDiv = document.createElement('div');
+            let textBackDiv = document.createElement('div');
             textBackDiv.id = 'textBackDiv' + i;
-            textBackDisplay = document.createElement('textarea');
+            let textBackDisplay = document.createElement('textarea');
             textBackDisplay.style = 'width:600px; height:50px';
             textBackDisplay.readonly = true;
             textBackDisplay.id = 'textBackDisplay' + i;
@@ -583,7 +583,7 @@ function changePaginationOption(){
 
 function shortcutButtonClicked(){
 
-    for(i = 0; i < labelSet.length; i++){
+    for(let i = 0; i < labelSet.length; i++){
         let shortcutField = document.createElement('textarea');
         shortcutField.style = 'width:30px; height:15px';
         shortcutField.maxLength = '1';
@@ -603,7 +603,7 @@ function shortcutOkayButtonClicked(){
 
     // fill the shortcutList with the entered shortcuts & delete html elements
     let shortcutList = new Object();
-    for(i = 0; i < labelSet.length; i++){
+    for(let i = 0; i < labelSet.length; i++){
         let shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutList[labelSet[i]] = shortcutField.value;
         shortcutField.parentNode.removeChild(shortcutField);
@@ -628,7 +628,7 @@ function addShortcutFunctionality(){
         if (e.which == 39 || e.keyCode == 39){
             textForwardButton.click();
         }
-        for(i = 0; i < labelSet.length; i++){
+        for(let i = 0; i < labelSet.length; i++){
             if (e.which == keyCodeList[shortcutList[labelSet[i]]] 
                 || e.keyCode == keyCodeList[shortcutList[labelSet[i]]]){
                 document.getElementById(labelSet[i] + 'Button').click();

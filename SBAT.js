@@ -139,7 +139,7 @@ function getFileData(uploadedFile){
 
 function loadTxt(data){
     inputData = data.split(/\r?\n/);
-    for (i = 0; i < inputData.length; i++){
+    for (let i = 0; i < inputData.length; i++){
         const aO = new Object();
         aO.text = inputData[i];
         aO.label = [];
@@ -149,8 +149,8 @@ function loadTxt(data){
 }
 
 function loadJson(data){
-    json = data;
-    parsedJson = JSON.parse(json);
+    let json = data;
+    let parsedJson = JSON.parse(json);
     inputData = [];
     enteredLabelSet.value = '';
     if (parsedJson.labelSet.length > 0){
@@ -259,13 +259,13 @@ function submitButtonClicked(){
     if (labelSet.length > 0){
         for (let i = 0; i < labelSet.length; i++){
             if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
-                btn = document.getElementById(labelSet[i] + 'Button');
+                let btn = document.getElementById(labelSet[i] + 'Button');
                 btn.parentNode.removeChild(btn);
             }
             if (labelSet[i][0] == '*'){
-                drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+                let drpdwn = document.getElementById(labelSet[i] + 'DropDown');
                 drpdwn.parentNode.removeChild(drpdwn);
-                drpdwnlbl = document.getElementById(labelSet[i] + 'DropDownLabel');
+                let drpdwnlbl = document.getElementById(labelSet[i] + 'DropDownLabel');
                 drpdwnlbl.parentNode.removeChild(drpdwnlbl);
             }
         }
@@ -275,7 +275,7 @@ function submitButtonClicked(){
     labelObjectList = []
     for (let i = 0; i < labelSet.length; i++){
         if (labelSet[i][0] == '*'){
-            clsLabelList = [];
+            let clsLabelList = [];
             for (let j = i + 1; j < labelSet.length; j++){
                 if (labelSet[j][0] == '-'){
                     clsLabelList.push(labelSet[j]);
@@ -320,7 +320,7 @@ function progressTextDisplay(){
     if (labelObjectList.length > 0){
         for (let i = 0; i < labelObjectList.length; i++){
             if (labelObjectList[i].hasParent){
-                btn = document.getElementById(labelObjectList[i].name + 'Button');
+                let btn = document.getElementById(labelObjectList[i].name + 'Button');
                 btn.hidden = true;
             }
         }
@@ -328,19 +328,19 @@ function progressTextDisplay(){
 
     if (paginationValue > 0){
         if (textIndex < inputData.length){
-            for (i = 1; i <= paginationValue; i++){
+            for (let i = 1; i <= paginationValue; i++){
                 if (textIndex >= i){
-                    textFrontDisplay = document.getElementById('textFrontDisplay' + i);
+                    let textFrontDisplay = document.getElementById('textFrontDisplay' + i);
                     textFrontDisplay.value = inputData[textIndex - i];
                 }
                 if(textIndex < paginationValue){
                     if(document.getElementById('textFrontDisplay' + (textIndex + 1))){
-                        textFrontDisplay = document.getElementById('textFrontDisplay' + (textIndex + 1));
+                        let textFrontDisplay = document.getElementById('textFrontDisplay' + (textIndex + 1));
                         textFrontDisplay.value = '';
                     }
                 }
                 if (textIndex <= (inputData.length - i)){
-                    textBackDisplay = document.getElementById('textBackDisplay' + i);
+                    let textBackDisplay = document.getElementById('textBackDisplay' + i);
                     textBackDisplay.value = inputData[textIndex + i];
                     if(textBackDisplay.value == 'undefined'){
                         textBackDisplay.value = '';
@@ -359,11 +359,11 @@ function progressTextDisplay(){
             if (labelSet.length > 0){
                 for (let i = 0; i < labelSet.length; i++){
                     if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
-                        btn = document.getElementById(labelSet[i] + 'Button');
+                        let btn = document.getElementById(labelSet[i] + 'Button');
                         btn.disabled = true;
                     }
                     if (labelSet[i][0] == '*'){
-                        drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+                        let drpdwn = document.getElementById(labelSet[i] + 'DropDown');
                         drpdwn.disabled = true;
                     }
                 }
@@ -383,11 +383,11 @@ function progressTextDisplay(){
             if (labelSet.length > 0){
                 for (let i = 0; i < labelSet.length; i++){
                     if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
-                        btn = document.getElementById(labelSet[i] + 'Button');
+                        let btn = document.getElementById(labelSet[i] + 'Button');
                         btn.disabled = true;
                     }
                     if (labelSet[i][0] == '*'){
-                        drpdwn = document.getElementById(labelSet[i] + 'DropDown');
+                        let drpdwn = document.getElementById(labelSet[i] + 'DropDown');
                         drpdwn.disabled = true;
                     }
                 }
@@ -407,7 +407,7 @@ function progressTextDisplay(){
                 }
             }
             for (let k = 0; k < labelObjectList[num].childrenList.length; k++){
-                btn = document.getElementById(labelObjectList[num].childrenList[k] + 'Button');
+                let btn = document.getElementById(labelObjectList[num].childrenList[k] + 'Button');
                 btn.hidden = false;
             }
         }

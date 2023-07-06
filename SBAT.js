@@ -718,6 +718,7 @@ function loadConfigFile(file){
         let userIndex;
         // search for the authenticated user in the annotators list
         for (let i = 0; i < data.annotators.length; i++){
+            console.log(data.annotators[i].user);
             if(data.annotators[i].user == authenticatedUser){
                 userIndex = i;
             }

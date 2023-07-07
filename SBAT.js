@@ -23,7 +23,7 @@ let submitButton = document.getElementById('submitButton');
 let shortcutButton = document.getElementById('shortcutButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
 let labelButtonArea = document.getElementById('labelButtonArea');
-let anootationArea = document.getElementById('annotationArea');
+let annotationArea = document.getElementById('annotationArea');
 let paginationDropdown = document.getElementById('paginationDropdown');
 let shortcutOkayButton = document.getElementById('shortcutOkayButton');
 let shortcutArea = document.getElementById('shortcutArea');
@@ -45,6 +45,7 @@ let localStorageSwitch = document.getElementById('localStorageSwitch');
 let personalAccessToken = document.getElementById('personalAccessToken');
 let authenticationOkayButton = document.getElementById('authenticationOkayButton');
 let authenticationArea = document.getElementById('authenticationArea');
+let commitButton = document.getElementById('commitButton');
 
 // Main/Setup
 setupHTMLElements();
@@ -116,6 +117,7 @@ function setupHTMLElements(){
     multilabelSwitch.addEventListener('change', multilabelSwitchClicked);
     localStorageSwitch.addEventListener('change', localStorageSwitchClicked);
     authenticationOkayButton.addEventListener('click', authenticationOkayButtonClicked);
+    commitButton.addEventListener('click', commitButtonClicked);
 }
 
 // Upload Button
@@ -825,6 +827,10 @@ async function authenticationOkayButtonClicked(){
     console.log("Hello, %s", login);
 
     loadConfigFile('./config.json');
+}
+
+function commitButtonClicked(){
+    //TODO: make file, upload file
 }
 
 //warning before closing the window

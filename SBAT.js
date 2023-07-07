@@ -723,7 +723,7 @@ function loadConfigFile(file){
             }
         }
         if (userIndex == undefined){
-            alert("Autenticated User is not in Annotators list");
+            alert("Authenticated User is not in Annotators list");
             return;
         }
         else{
@@ -739,7 +739,7 @@ function makeFileSelection(files){
     fileSelection.id = 'fileSelection';
     let fileSelectionLabel = document.createElement('label');
     fileSelectionLabel.for = 'fileSelection';
-    fileSelection.innerHTML = 'Select file';
+    fileSelectionLabel.innerHTML = 'Select file';
     fileSelection.appendChild(document.createElement('option'));
     for (let i = 0; i < files.length; i++){
         let fileOption = document.createElement('option');

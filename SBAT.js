@@ -482,20 +482,7 @@ function textForwardButtonClicked(){
 
 function downloadButtonClicked(){
 
-    let cleanedOutputData = outputData;
-    /*
-    for (let i = 0; i < outputData.length; i++){
-        for (let j = 0; j < outputData[i].label.length; j++){
-            cleanedOutputData[i].label[j] = outputData[i].label[j].substring(getSubLabelLevel(outputData[i].label[j]));
-        }
-        
-    }
-    */
-
-    let dataToWrite = new Object();
-    dataToWrite.labelSet = labelSet;
-    dataToWrite.data = cleanedOutputData;
-    let textFileAsBlob = new Blob([JSON.stringify(dataToWrite)], {type:'application/json'});
+    let textFileAsBlob = makeFile();
     let downloadLink = document.createElement("a");
     downloadLink.download = document.getElementById('fileNameToSaveAs').value;;
     downloadLink.innerHTML = "Download File";
@@ -515,6 +502,24 @@ function downloadButtonClicked(){
         document.body.appendChild(downloadLink);
     }
     downloadLink.click();
+}
+
+function makeFile(){
+    let cleanedOutputData = outputData;
+    /*
+    for (let i = 0; i < outputData.length; i++){
+        for (let j = 0; j < outputData[i].label.length; j++){
+            cleanedOutputData[i].label[j] = outputData[i].label[j].substring(getSubLabelLevel(outputData[i].label[j]));
+        }
+        
+    }
+    */
+
+    let dataToWrite = new Object();
+    dataToWrite.labelSet = labelSet;
+    dataToWrite.data = cleanedOutputData;
+    let textFileAsBlob = new Blob([JSON.stringify(dataToWrite)], {type:'application/json'});
+    return(textFileAsBlob);
 }
 
 // Pagination
@@ -714,6 +719,8 @@ function saveDataToLocalStorage(){
     localStorage.setItem('SBATData', JSON.stringify(SBATData));
 }
 
+//config
+
 function loadConfigFile(file){
     $.getJSON(file)
     .done(function( data ) {
@@ -831,6 +838,7 @@ async function authenticationOkayButtonClicked(){
 
 function commitButtonClicked(){
     //TODO: make file, upload file
+    let fileToCommit = makeFile();
 }
 
 //warning before closing the window

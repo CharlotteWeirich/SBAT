@@ -1,4 +1,4 @@
-{"annotators":[{"user": "CharlotteWeirich", "files": ["example.txt", "example2.txt"], 
+{"annotators":[{"user": "CharlotteWeirich", "files": ["example.json", "example2.json"], 
 "settings": [{"labelSet":["Negative", "Positive"], 
 "shortcutList":{"Negative": "n", "Positive": "p"}, 
 "multilabel": true, 

@@ -760,10 +760,10 @@ function makeFileSelection(files){
     annotationArea.appendChild(fileSelectionLabel);
 
     fileSelection.addEventListener('change', function(){
-        selectedFile = fileSelection.options[fileSelection.selectedIndex].text;
+        let selectedFile = fileSelection.options[fileSelection.selectedIndex].text;
         textIndex = 0;
         outputData = [];
-        content = '';
+        let content = '';
         if(selectedFile.endsWith('.txt')){
             $.get('./' + selectedFile)
             .done(function(data) {

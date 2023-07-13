@@ -775,6 +775,7 @@ function makeFileSelection(files){
             $.get('./' + selectedFile)
             .done(function(data) {
                 content = data;
+                console.log(content);
                 loadJson(content);
             }); 
         }

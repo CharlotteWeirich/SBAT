@@ -871,7 +871,7 @@ async function commitButtonClicked(){
     });
     console.log(refData);
     const commitSha = refData.object.sha
-    const { data: commitData } = await octo.git.getCommit({
+    const { data: commitData } = await octokit.rest.git.getCommit({
       owner: owner,
       repo: 'SBAT',
       commit_sha: commitSha,

@@ -863,6 +863,7 @@ async function commitButtonClicked(){
     //first get the SHA of the last commit and its tree
     const {data: refData} = await octokit.rest.git.getRef;
     console.log(refData);
+    console.log('hi');
 }
 
 //warning before closing the window

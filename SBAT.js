@@ -861,7 +861,7 @@ async function commitButtonClicked(){
     let fileToCommit = makeFile();
 
     const currentURL = window.location.href;
-    let owner = currentURL.substring(8, -16);
+    let owner = currentURL.substring(8);
     console.log(owner);
 
     //first get the SHA of the last commit and its tree

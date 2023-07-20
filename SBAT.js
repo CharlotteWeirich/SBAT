@@ -861,11 +861,14 @@ async function commitButtonClicked(){
     let fileToCommit = makeFile();
 
     const currentURL = window.location.href;
-    let owner = currentURL.substring(8);
-    console.log(owner);
+    let owner = currentURL.slice(8, -16);
 
     //first get the SHA of the last commit and its tree
-    const {data: refData} = await octokit.rest.git.getRef;
+    const {data: refData} = await octokit.rest.git.getRef({
+        owner: owner,
+        repo: 'SBAT',
+        ref: `heads/commitChanges'`
+    });
     console.log(refData);
 
 }

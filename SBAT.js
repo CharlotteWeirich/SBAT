@@ -867,7 +867,7 @@ async function commitButtonClicked(){
     const {data: refData} = await octokit.rest.git.getRef({
         owner: owner,
         repo: 'SBAT',
-        ref: `heads/commitChanges'`
+        ref: `tree/commitChanges'`
     });
     console.log(refData);
 

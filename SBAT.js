@@ -860,10 +860,14 @@ async function commitButtonClicked(){
     //TODO: make file, upload file
     let fileToCommit = makeFile();
 
+    const currentURL = window.location.href;
+    let owner = currentURL.substring(8, -16);
+    console.log(owner);
+
     //first get the SHA of the last commit and its tree
     const {data: refData} = await octokit.rest.git.getRef;
     console.log(refData);
-    console.log('hi');
+
 }
 
 //warning before closing the window

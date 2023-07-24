@@ -907,7 +907,7 @@ async function commitButtonClicked(){
         repo: repo,
         tree: ({path: fileName,
             mode: '100644',
-        sha: blobData.object.sha}),
+        sha: blobData.sha}),
         base_tree: treesha,
       })
       console.log(newTree);

@@ -882,6 +882,7 @@ async function commitButtonClicked(){
     let dataToWrite = new Object();
     dataToWrite.labelSet = labelSet;
     dataToWrite.data = outputData;
+    let content = JSON.stringify(dataToWrite);
     let fileSelection = document.getElementById('fileSelection');
     let fileName;
     if (fileSelection.options[fileSelection.selectedIndex].text.endsWith('.json')){
@@ -895,7 +896,7 @@ async function commitButtonClicked(){
     const blobData = await octokit.rest.git.createBlob({
         owner: owner,
         repo: repo,
-        content: dataToWrite,
+        content: content,
         encoding: 'utf-8',
       })
       console.log(blobData);

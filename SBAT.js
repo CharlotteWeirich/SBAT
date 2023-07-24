@@ -884,11 +884,11 @@ async function commitButtonClicked(){
     dataToWrite.data = outputData;
     let fileSelection = document.getElementById('fileSelection');
     let fileName;
-    if (fileSelection.selected.endsWith('.json')){
-        fileName = fileSelection.selected.innerHTML;
+    if (fileSelection.options[fileSelection.selectedIndex].text.endsWith('.json')){
+        fileName = fileSelection.options[fileSelection.selectedIndex].text;
     }
     else{
-        fileName = fileSelection.selected.innerHTML.slice(0, -3) + 'json';
+        fileName = fileSelection.options[fileSelection.selectedIndex].text.slice(0, -3) + 'json';
     }
     console.log(fileName);
 

@@ -862,21 +862,54 @@ async function commitButtonClicked(){
 
     const currentURL = window.location.href;
     let owner = currentURL.slice(8, -16);
+    let repo = 'SBAT';
 
     //first get the SHA of the last commit and its tree
     const {data: refData} = await octokit.rest.git.getRef({
         owner: owner,
-        repo: 'SBAT',
+        repo: repo,
         ref: 'heads/commitChanges'
     });
-    console.log(refData);
     const commitSha = refData.object.sha
     const { data: commitData } = await octokit.rest.git.getCommit({
       owner: owner,
-      repo: 'SBAT',
+      repo: repo,
       commit_sha: commitSha,
     })
     const treesha = commitData.tree.sha;
+
+    //then create a blob for the file
+    let dataToWrite = new Object();
+    dataToWrite.labelSet = labelSet;
+    dataToWrite.data = outputData;
+    let fileSelection = document.getElementById('fileSelection');
+    let fileName;
+    if (fileSelection.selected.endsWith('.json')){
+        fileName = fileSelection.selected.innerHTML;
+    }
+    else{
+        fileName = fileSelection.selected.innerHTML.slice(0, -3) + 'json';
+    }
+    console.log(fileName);
+
+    const blobData = await octokit.rest.git.createBlob({
+        owner: owner,
+        repo: repo,
+        content: dataToWrite,
+        encoding: 'utf-8',
+      })
+      console.log(blobData);
+
+      // create a tree for some reason
+      const { newTree } = await octokit.rest.git.createTree({
+        owner: owner,
+        repo: repo,
+        tree: ({path: fileName,
+            mode: '100644',
+        sha: blobData.object.sha}),
+        base_tree: treesha,
+      })
+      console.log(newTree);
 
 }
 

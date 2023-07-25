@@ -891,7 +891,6 @@ async function commitButtonClicked(){
     else{
         fileName = fileSelection.options[fileSelection.selectedIndex].text.slice(0, -3) + 'json';
     }
-    console.log(fileName);
 
     const blobData = await octokit.rest.git.createBlob({
         owner: owner,
@@ -903,7 +902,7 @@ async function commitButtonClicked(){
 
       // create a tree for some reason
 
-      const tree = ({path: fileName,
+      const tree = ({path: ('https://github.com/' + owner + '/' + repo + '/blob/commitChanges/' + fileName),
         mode: '100644',
         type: 'blob',
         sha: blobData.data.sha})

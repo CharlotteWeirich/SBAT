@@ -903,7 +903,7 @@ async function commitButtonClicked(){
 
       // create a tree for some reason
 
-      const tree = Octokit.GitCreateTreeParamsTree({path: fileName,
+      const tree = ({path: fileName,
         mode: '100644',
         type: 'blob',
         sha: blobData.sha})

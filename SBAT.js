@@ -902,18 +902,18 @@ async function commitButtonClicked(){
 
       // create a tree for some reason
 
-      const tree = ({path: ('https://github.com/' + owner + '/' + repo + '/blob/commitChanges/' + fileName),
+    let tree = ({path: ('https://github.com/' + owner + '/' + repo + '/blob/commitChanges/' + fileName),
         mode: '100644',
         type: 'blob',
         sha: blobData.data.sha})
     console.log(tree);
-      const { newTree } = await octokit.rest.git.createTree({
+    const { newTree } = await octokit.rest.git.createTree({
         owner: owner,
         repo: repo,
         tree: tree,
         base_tree: treesha,
       })
-      console.log(newTree);
+    console.log(newTree);
 
 }
 

@@ -877,6 +877,7 @@ async function commitButtonClicked(){
       commit_sha: commitSha,
     })
     const treesha = commitData.tree.sha;
+    console.log(commitData.tree);
 
     //then create a blob for the file
     let dataToWrite = new Object();

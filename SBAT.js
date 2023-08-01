@@ -904,7 +904,7 @@ async function commitButtonClicked(){
       // create a tree for some reason
       //('https://github.com/' + owner + '/' + repo + '/blob/commitChanges/' + fileName)
 
-    let tree = [{path: blobData.url},
+    let tree = [{path: 'https://api.github.com/repos/charlotteweirich/SBAT/git/trees'},
         {mode: '100644'},
         {type: 'blob'},
         {sha: blobData.data.sha}];

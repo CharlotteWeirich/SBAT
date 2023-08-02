@@ -906,7 +906,8 @@ async function commitButtonClicked(){
 
     let tree = [{path: fileName},
         {mode: '100644'},
-        {sha: blobData.data.sha}];
+        {type: 'blob'},
+        {content: content}];
     console.log(tree);
     const { newTree } = await octokit.rest.git.createTree({
         owner: owner,

@@ -23,7 +23,7 @@ let submitButton = document.getElementById('submitButton');
 let shortcutButton = document.getElementById('shortcutButton');
 let enteredLabelSet = document.getElementById('enteredLabelSet');
 let labelButtonArea = document.getElementById('labelButtonArea');
-let anootationArea = document.getElementById('annotationArea');
+let annotationArea = document.getElementById('annotationArea');
 let paginationDropdown = document.getElementById('paginationDropdown');
 let shortcutOkayButton = document.getElementById('shortcutOkayButton');
 let shortcutArea = document.getElementById('shortcutArea');
@@ -732,6 +732,7 @@ function loadConfigFile(file){
         else{
             authenticationArea.hidden = true;
             downloadArea.hidden = false;
+            document.getElementById('fileNameToSaveAs').innerHTML = '';
             makeFileSelection(data.annotators[userIndex].files);
             loadConfigSettings(data.annotators[userIndex].settings[0]);
         }

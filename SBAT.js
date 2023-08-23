@@ -45,6 +45,7 @@ let localStorageSwitch = document.getElementById('localStorageSwitch');
 let personalAccessToken = document.getElementById('personalAccessToken');
 let authenticationOkayButton = document.getElementById('authenticationOkayButton');
 let authenticationArea = document.getElementById('authenticationArea');
+let downloadArea = document.getElementById('downloadArea');
 
 // Main/Setup
 setupHTMLElements();
@@ -58,6 +59,7 @@ settingSwitch.checked = false;
 wholeDocumentSwitch.checked = false;
 multilabelSwitch.checked = false;
 localStorageSwitch.checked = false;
+downloadArea.hidden = true;
 
 if (localStorage.getItem('SBATData') != null){
     annotationArea.hidden = false;
@@ -104,6 +106,7 @@ function setupHTMLElements(){
         annotationArea.hidden = false;
         welcomeArea.hidden = true;
         uploadArea.hidden = true;
+        downloadArea.hidden = false;
     });
     submitButton.addEventListener('click', submitButtonClicked);
     paginationDropdown.addEventListener('change', changePaginationOption);
@@ -728,6 +731,7 @@ function loadConfigFile(file){
         }
         else{
             authenticationArea.hidden = true;
+            downloadArea.hidden = false;
             makeFileSelection(data.annotators[userIndex].files);
             loadConfigSettings(data.annotators[userIndex].settings[0]);
         }
@@ -814,10 +818,7 @@ function loadConfigSettings(settings){
 
 async function authenticationOkayButtonClicked(){
     let authKey = personalAccessToken.value;
-    // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
     const octokit = new Octokit({ auth: authKey });
-
-    // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
     const {
         data: { login },
     } = await octokit.rest.users.getAuthenticated();

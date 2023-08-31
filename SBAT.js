@@ -213,7 +213,7 @@ function makeLabelDropDown(clsName, labels){
 
     // give drop down functionality
     document.getElementById(labelDropDown.id).addEventListener('change', function(){
-        e = document.getElementById(labelDropDown.id);
+        let e = document.getElementById(labelDropDown.id);
         selectedLabel = e.options[e.selectedIndex].text;
         setClassLabel(clsName, selectedLabel);
     })

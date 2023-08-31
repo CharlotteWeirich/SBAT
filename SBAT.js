@@ -234,7 +234,7 @@ function setClassLabel(clsName, label){
 
 function addLabel(label){
     if (multilabel == true){
-        btn = document.getElementById(label + 'Button');
+        let btn = document.getElementById(label + 'Button');
         if (btn.classList.contains('selected')){
             btn.classList.remove('selected');
             outputData[textIndex-1].label = outputData[textIndex-1].label.filter(function(e) { return e !== label });

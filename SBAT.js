@@ -214,7 +214,7 @@ function makeLabelDropDown(clsName, labels){
     // give drop down functionality
     document.getElementById(labelDropDown.id).addEventListener('change', function(){
         let e = document.getElementById(labelDropDown.id);
-        selectedLabel = e.options[e.selectedIndex].text;
+        let selectedLabel = e.options[e.selectedIndex].text;
         setClassLabel(clsName, selectedLabel);
     })
 }
@@ -225,7 +225,7 @@ function setClassLabel(clsName, label){
         outputData[textIndex-1].label[i].label = label;
     }
     else {
-        aO = new Object;
+        let aO = new Object;
         aO.clsName = clsName;
         aO.label = label;
         outputData[textIndex-1].label.push(aO);

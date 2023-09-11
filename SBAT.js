@@ -604,14 +604,15 @@ function shortcutButtonClicked(){
 function shortcutOkayButtonClicked(){
 
     // fill the shortcutList with the entered shortcuts & delete html elements
-    shortcutList = new Object();
+    let scList = new Object();
     for(let i = 0; i < labelSet.length; i++){
         let shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
-        shortcutList[labelSet[i]] = shortcutField.value;
+        scList[labelSet[i]] = shortcutField.value;
         shortcutField.parentNode.removeChild(shortcutField);
         let shortcutFieldLabel = document.getElementById(labelSet[i] + 'Label');
         shortcutFieldLabel.parentNode.removeChild(shortcutFieldLabel);
     }
+    shortcutList = scList;
 
     shortcutOkayButton.hidden = true;
     shortcutButton.disabled = false;

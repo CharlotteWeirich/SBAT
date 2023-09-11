@@ -604,7 +604,7 @@ function shortcutButtonClicked(){
 function shortcutOkayButtonClicked(){
 
     // fill the shortcutList with the entered shortcuts & delete html elements
-    let shortcutList = new Object();
+    shortcutList = new Object();
     for(let i = 0; i < labelSet.length; i++){
         let shortcutField = document.getElementById(labelSet[i] + 'Shortcut');
         shortcutList[labelSet[i]] = shortcutField.value;

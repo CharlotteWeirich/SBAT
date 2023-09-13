@@ -155,18 +155,21 @@ function loadJson(data){
     let parsedJson = JSON.parse(json);
     inputData = [];
     enteredLabelSet.value = '';
-    if (parsedJson.labelSet.length > 0){
-        for (let i = 0; i < parsedJson.labelSet.length; i++){
-            if (i == parsedJson.labelSet.length-1){
-                enteredLabelSet.value += parsedJson.labelSet[i]
+    if(parsedJson.labelSet){
+        if (parsedJson.labelSet.length > 0){
+            for (let i = 0; i < parsedJson.labelSet.length; i++){
+                if (i == parsedJson.labelSet.length-1){
+                    enteredLabelSet.value += parsedJson.labelSet[i]
+                }
+                else{
+                    enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
+                }
             }
-            else{
-                enteredLabelSet.value += parsedJson.labelSet[i] + '\r\n';
-            }
+            submitButtonClicked();
         }
-        submitButtonClicked();
+    
     }
-
+    
     for (let i = 0; i < parsedJson.data.length; i++){
         inputData.push(parsedJson.data[i].text);
         outputData.push(parsedJson.data[i]);

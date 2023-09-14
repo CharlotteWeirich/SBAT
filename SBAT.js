@@ -155,6 +155,10 @@ function loadJson(data){
     let parsedJson = JSON.parse(json);
     inputData = [];
     enteredLabelSet.value = '';
+    for (let i = 0; i < parsedJson.data.length; i++){
+        inputData.push(parsedJson.data[i].text);
+        outputData.push(parsedJson.data[i]);
+    }
     if (parsedJson.labelSet.length > 0){
         for (let i = 0; i < parsedJson.labelSet.length; i++){
             if (i == parsedJson.labelSet.length-1){
@@ -165,12 +169,6 @@ function loadJson(data){
             }
         }
         submitButtonClicked();
-    }
-    
-    
-    for (let i = 0; i < parsedJson.data.length; i++){
-        inputData.push(parsedJson.data[i].text);
-        outputData.push(parsedJson.data[i]);
     }
     progressTextDisplay();
 }

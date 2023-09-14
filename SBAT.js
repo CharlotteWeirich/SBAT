@@ -160,6 +160,7 @@ function loadJson(data){
         outputData.push(parsedJson.data[i]);
     }
     console.log(outputData);
+    console.log(textIndex);
     if (parsedJson.labelSet.length > 0){
         for (let i = 0; i < parsedJson.labelSet.length; i++){
             if (i == parsedJson.labelSet.length-1){

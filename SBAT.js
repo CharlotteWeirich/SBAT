@@ -375,8 +375,14 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             textDisplay.value = inputData[textIndex];
-            selectLabelButtons();
-            textIndex ++;      
+            if(textIndex < 0){
+                textIndex ++;
+                selectLabelButtons();
+            }
+            else{
+                selectLabelButtons();
+                textIndex ++;  
+            }    
         }
         else{
             alert ('Reached end of data.');
@@ -427,9 +433,7 @@ function displayOutput(){
 }
 
 function selectLabelButtons(){
-    if(textIndex < 0){
-        progressTextDisplay();
-    }
+
     for (let i = 0; i < labelSet.length; i++){
         if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
             let btn = document.getElementById(labelSet[i] + 'Button');

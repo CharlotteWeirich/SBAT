@@ -159,8 +159,6 @@ function loadJson(data){
         inputData.push(parsedJson.data[i].text);
         outputData.push(parsedJson.data[i]);
     }
-    console.log(outputData);
-    console.log(textIndex);
     if (parsedJson.labelSet.length > 0){
         for (let i = 0; i < parsedJson.labelSet.length; i++){
             if (i == parsedJson.labelSet.length-1){
@@ -430,8 +428,7 @@ function displayOutput(){
 
 function selectLabelButtons(){
     if(textIndex < 0){
-        console.log(textIndex);
-        return;
+        progressTextDisplay();
     }
     for (let i = 0; i < labelSet.length; i++){
         if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){

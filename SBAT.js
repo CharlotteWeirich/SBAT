@@ -377,7 +377,6 @@ function progressTextDisplay(){
             textDisplay.value = inputData[textIndex];
             if(textIndex < 0){
                 textIndex ++;
-                selectLabelButtons();
             }
             else{
                 selectLabelButtons();

@@ -429,6 +429,9 @@ function displayOutput(){
 }
 
 function selectLabelButtons(){
+    if(textIndex < 0){
+        return;
+    }
     for (let i = 0; i < labelSet.length; i++){
         if (labelSet[i][0] != '*' && labelSet[i][0] != '-'){
             let btn = document.getElementById(labelSet[i] + 'Button');

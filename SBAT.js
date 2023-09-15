@@ -374,11 +374,11 @@ function progressTextDisplay(){
 
     else{
         if (textIndex < inputData.length){
-            textDisplay.value = inputData[textIndex];
             if(textIndex < 0){
                 textIndex ++;
             }
             else{
+                textDisplay.value = inputData[textIndex];
                 selectLabelButtons();
                 textIndex ++;  
             }    

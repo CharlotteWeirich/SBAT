@@ -375,7 +375,6 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             if(textIndex < 0){
-                console.log('hello');
                 textIndex ++;
                 textDisplay.value = inputData[textIndex];
             }

@@ -430,6 +430,7 @@ function displayOutput(){
 
 function selectLabelButtons(){
     if(textIndex < 0){
+        console.log(textIndex);
         return;
     }
     for (let i = 0; i < labelSet.length; i++){

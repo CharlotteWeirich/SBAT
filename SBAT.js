@@ -375,7 +375,9 @@ function progressTextDisplay(){
     else{
         if (textIndex < inputData.length){
             if(textIndex < 0){
+                console.log('hello');
                 textIndex ++;
+                textDisplay.value = inputData[textIndex];
             }
             else{
                 textDisplay.value = inputData[textIndex];
@@ -403,7 +405,7 @@ function progressTextDisplay(){
     numberOfTexts.value = textIndex + '/' + inputData.length;
 
     // show relevant child buttons
-    if (labelObjectList.length > 0){
+    if (labelObjectList.length > 0 && textIndex > 0){
         for(let i = 0; i < outputData[textIndex-1].label.length; i++){
             let num;
             for (let j = 0; j < labelObjectList.length; j++){
